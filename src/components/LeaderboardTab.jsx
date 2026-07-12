@@ -10,6 +10,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { dbService } from '../services/firebase';
+import { useApp } from '../context/AppContext';
 
 const MILESTONES = [
   {

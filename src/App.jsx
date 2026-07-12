@@ -36,9 +36,9 @@ function AppInner() {
       if (activeUser) {
         const allTasks = await dbService.getTasks();
         setTasks(allTasks);
-        const allWithdrawals = await dbService.getUserWithdrawals(activeUser.id);
+        const allWithdrawals = await dbService.getWithdrawals();
         setWithdrawals(allWithdrawals);
-        const allPendingClaims = await dbService.getUserPendingClaims(activeUser.id);
+        const allPendingClaims = await dbService.getPendingTaskClaims();
         setPendingTaskClaims(allPendingClaims);
         const stats = await dbService.getGlobalStats();
         setGlobalStats(stats);
