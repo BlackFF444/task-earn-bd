@@ -17,7 +17,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
   const [withdrawing, setWithdrawing] = useState(false);
 
   const handleCopyLink = () => {
-    const link = `https://t.me/task_earn_bd_bot?start=${user.referralCode}`;
+    const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
     navigator.clipboard.writeText(link).catch(() => {});
     setCopied(true);
     notify('Referral link copied! 🔗', 'success');

@@ -97,7 +97,7 @@ function HomeTab({ user, refreshAppState, tasks }) {
   };
 
   const handleCopyReferral = () => {
-    const link = `https://t.me/task_earn_bd_bot?start=${user.referralCode}`;
+    const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
     navigator.clipboard.writeText(link).catch(() => {});
     setCopied(true);
     notify('Referral link copied to clipboard! 🔗', 'success');
@@ -115,7 +115,7 @@ function HomeTab({ user, refreshAppState, tasks }) {
   if (user.referralCount < 5) { nextTierRefNeed = 5 - user.referralCount; nextTierName = 'Gold Club (x1.5)'; }
   else if (user.referralCount < 15) { nextTierRefNeed = 15 - user.referralCount; nextTierName = 'Platinum VIP (x2.0)'; }
 
-  const referralLink = `https://t.me/task_earn_bd_bot?start=${user.referralCode}`;
+  const referralLink = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
   const commissionEarned = (user.referralCount * 0.05).toFixed(2);
 
   return (
