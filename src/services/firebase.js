@@ -55,66 +55,10 @@ const DEFAULT_TASKS = [
 ];
 
 // Seed initial mock users for Leaderboard and Stats
-const DEFAULT_USERS = [
-  {
-    id: 'mock-user-1',
-    name: 'Sabbir Rahman',
-    photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=sabbir',
-    balance: 12.45,
-    referralCode: 'SABBIR77',
-    referralCount: 18, // Platinum
-    streakCount: 6,
-    lastCheckIn: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-    completedTasks: ['task-1', 'task-2', 'task-4'],
-  },
-  {
-    id: 'mock-user-2',
-    name: 'Tahsan Khan',
-    photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=tahsan',
-    balance: 5.82,
-    referralCode: 'TAHSAN99',
-    referralCount: 8, // Gold
-    streakCount: 3,
-    lastCheckIn: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
-    completedTasks: ['task-1', 'task-2'],
-  },
-  {
-    id: 'mock-user-3',
-    name: 'Anika Tabassum',
-    photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=anika',
-    balance: 24.15,
-    referralCode: 'ANIKA12',
-    referralCount: 22, // Platinum
-    streakCount: 7,
-    lastCheckIn: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
-    completedTasks: ['task-1', 'task-2', 'task-3', 'task-4'],
-  },
-  {
-    id: 'mock-user-4',
-    name: 'Mahfuz Alam',
-    photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=mahfuz',
-    balance: 1.25,
-    referralCode: 'MAHFUZ55',
-    referralCount: 2, // Bronze
-    streakCount: 1,
-    lastCheckIn: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(),
-    completedTasks: ['task-1'],
-  },
-  {
-    id: 'mock-user-5',
-    name: 'Faria Jahan',
-    photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=faria',
-    balance: 0.45,
-    referralCode: 'FARIA777',
-    referralCount: 0, // Bronze
-    streakCount: 0,
-    lastCheckIn: null,
-    completedTasks: [],
-  }
-];
+const DEFAULT_USERS = [];
 
 // Build version - clear stale data on update
-const APP_VERSION = '3.0.0';
+const APP_VERSION = '4.0.0';
 const VERSION_KEY = 'task_earn_bd_version';
 
 const checkAndClearStaleData = () => {
