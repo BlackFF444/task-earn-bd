@@ -98,10 +98,37 @@ function HomeTab({ user, refreshAppState, tasks }) {
 
   const handleCopyReferral = () => {
     const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
-    navigator.clipboard.writeText(link).catch(() => {});
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = link;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = link;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
     setCopied(true);
-    notify('Referral link copied to clipboard! 🔗', 'success');
+    notify('Referral link copied!', 'success');
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShareReferral = () => {
+    const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
+    const text = encodeURIComponent(`Join Task Earn BD and earn USDT! Use my referral link:\n\n${link}`);
+    const tg = window.Telegram?.WebApp;
+    if (tg?.openTelegramLink) {
+      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`);
+    } else {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`, '_blank');
+    }
   };
 
   const multiplier = getMultiplier(user.referralCount);
@@ -487,6 +514,13 @@ function HomeTab({ user, refreshAppState, tasks }) {
                 >
                   {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? t('copied') : t('copyLink')}</span>
+                </button>
+                <button
+                  onClick={handleShareReferral}
+                  className="py-1.5 px-3 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition-all border flex-shrink-0 bg-indigo-500/25 border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/40"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span>Share</span>
                 </button>
               </div>
             </div>

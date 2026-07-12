@@ -18,10 +18,36 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
 
   const handleCopyLink = () => {
     const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
-    navigator.clipboard.writeText(link).catch(() => {});
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = link;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = link;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
     setCopied(true);
-    notify('Referral link copied! 🔗', 'success');
+    notify('Referral link copied!', 'success');
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShareLink = () => {
+    const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
+    const tg = window.Telegram?.WebApp;
+    if (tg?.openTelegramLink) {
+      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`);
+    } else {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`, '_blank');
+    }
   };
 
   const handleWithdrawSubmit = async (e) => {
@@ -94,16 +120,25 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
         </div>
         <div className="bg-black/35 rounded-xl p-3 border border-white/5 flex items-center justify-between gap-3 mb-4">
           <div className="truncate text-xs font-mono text-gray-300">{user.referralCode}</div>
-          <button
-            onClick={handleCopyLink}
-            className={`py-1.5 px-3 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition-all border flex-shrink-0 ${
-              copied
-                ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
-                : 'bg-violet-500/25 border-violet-500/30 text-violet-300 hover:bg-violet-500/40'
-            }`}
-          >
-            {copied ? <><Check className="w-3.5 h-3.5" /><span>{t('copied')}</span></> : <><Copy className="w-3.5 h-3.5" /><span>{t('copyLink')}</span></>}
-          </button>
+          <div className="flex gap-1.5 flex-shrink-0">
+            <button
+              onClick={handleCopyLink}
+              className={`py-1.5 px-3 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition-all border ${
+                copied
+                  ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
+                  : 'bg-violet-500/25 border-violet-500/30 text-violet-300 hover:bg-violet-500/40'
+              }`}
+            >
+              {copied ? <><Check className="w-3.5 h-3.5" /><span>{t('copied')}</span></> : <><Copy className="w-3.5 h-3.5" /><span>{t('copyLink')}</span></>}
+            </button>
+            <button
+              onClick={handleShareLink}
+              className="py-1.5 px-3 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition-all border bg-indigo-500/25 border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/40"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Share</span>
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-3.5">
           <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center">
