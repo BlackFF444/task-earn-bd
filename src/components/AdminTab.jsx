@@ -7,6 +7,7 @@ import {
   AlertCircle, Megaphone, PieChart
 } from 'lucide-react';
 import { dbService } from '../services/firebase';
+import { telegramService } from '../services/telegram';
 import { useApp } from '../context/AppContext';
 
 // Mini sparkline chart
@@ -122,7 +123,10 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
   };
 
   const handleDeleteTask = async (taskId) => {
-    if (!confirm('Delete this task?')) return;
+    const confirmed = telegramService.isTelegramWebApp()
+      ? await telegramService.showConfirm('Delete this task?')
+      : window.confirm('Delete this task?');
+    if (!confirmed) return;
     try {
       await dbService.deleteTask(taskId);
       await refreshAppState();

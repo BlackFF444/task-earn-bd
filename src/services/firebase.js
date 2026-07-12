@@ -114,7 +114,7 @@ const DEFAULT_USERS = [
 ];
 
 // Build version - clear stale data on update
-const APP_VERSION = '2.0.0';
+const APP_VERSION = '2.1.0';
 const VERSION_KEY = 'task_earn_bd_version';
 
 const checkAndClearStaleData = () => {
@@ -125,7 +125,7 @@ const checkAndClearStaleData = () => {
       const keysToRemove = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith('task_earn_bd_') || key === 'te_lang' || key === 'te_theme' || key === 'te_announcements') {
+        if (key && (key.startsWith('task_earn_bd_') || key === 'te_lang' || key === 'te_theme' || key === 'te_announcements')) {
           keysToRemove.push(key);
         }
       }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BarChart2, TrendingUp, CheckSquare, Calendar, Flame,
-  Award, Star, Share2, Copy, Check, Users, Info, Zap, Bell
+  Star, Share2, Copy, Check, Users, Info, Zap, Bell
 } from 'lucide-react';
 import { dbService, getMultiplier, getVIPLevelName } from '../services/firebase';
 import { useApp } from '../context/AppContext';

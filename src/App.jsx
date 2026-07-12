@@ -67,7 +67,10 @@ function AppInner() {
   };
 
   const handleLogout = async () => {
-    if (confirm('Are you sure you want to logout?')) {
+    const confirmed = telegramService.isTelegramWebApp()
+      ? await telegramService.showConfirm('Are you sure you want to logout?')
+      : window.confirm('Are you sure you want to logout?');
+    if (confirmed) {
       await authService.logout();
       setUser(null);
       setActiveTab('home');
