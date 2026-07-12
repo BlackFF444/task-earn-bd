@@ -21,7 +21,7 @@ function AppInner() {
   const [tasks, setTasks] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
   const [pendingTaskClaims, setPendingTaskClaims] = useState([]);
-  const [globalStats, setGlobalStats] = useState({ totalUSDT: 0, totalUsers: 0, completedTasks: 0 });
+  const [globalStats, setGlobalStats] = useState({ totalBDT: 0, totalUsers: 0, completedTasks: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isInTelegram, setIsInTelegram] = useState(() => telegramService.isTelegramWebApp());
 
@@ -142,7 +142,7 @@ function AppInner() {
                       {getVIPLevelName(user.referralCount)}
                     </div>
                     <div className={`text-[11px] font-black mt-0.5 text-glow-green ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      ${user.balance.toFixed(3)} <span className={`text-[8px] font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-slate-400'}`}>USDT</span>
+                      ৳{user.balance.toFixed(2)} <span className={`text-[8px] font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-slate-400'}`}>BDT</span>
                     </div>
                   </div>
                   <img src={user.photoURL} alt={user.name} className="w-8.5 h-8.5 rounded-full border border-violet-500/40 object-cover bg-slate-900 shadow-md shadow-violet-500/10" />
@@ -163,7 +163,7 @@ function AppInner() {
                   TASK EARN BD
                 </h2>
                 <p className={`text-[11px] mb-4 max-w-[260px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
-                  Complete simple micro-social tasks, claim daily rewards & withdraw USDT instantly.
+                  Complete simple micro-social tasks, claim daily rewards & withdraw BDT instantly.
                 </p>
 
                 {isInTelegram ? (

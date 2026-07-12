@@ -226,7 +226,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
 
   // Fake sparkline data for analytics
   const userSparkData = [3, 5, 4, 7, 9, 8, globalStats.totalUsers];
-  const earningSparkData = [0.5, 1.2, 0.8, 2.1, 1.5, 2.8, globalStats.totalUSDT];
+  const earningSparkData = [0.5, 1.2, 0.8, 2.1, 1.5, 2.8, globalStats.totalBDT];
   const taskSparkData = [10, 15, 12, 20, 25, 22, globalStats.completedTasks];
 
   // Gateway breakdown
@@ -352,8 +352,8 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
             <StatCard
               icon={<DollarSign className="w-4 h-4 text-emerald-400" />}
               label="vs last week"
-              value={`$${globalStats.totalUSDT.toFixed(2)}`}
-              subValue="Total distributed USDT"
+              value={`৳${globalStats.totalBDT.toFixed(2)}`}
+              subValue="Total distributed BDT"
               trend={8}
               color="bg-emerald-500/10"
               sparkData={earningSparkData}
@@ -418,7 +418,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
             </div>
             <div className="glass-card p-3 rounded-xl text-center">
               <span className="text-[8px] text-gray-500 block uppercase font-bold mb-0.5">Paid Out</span>
-              <span className="text-sm font-black text-white">${totalApprovedAmount.toFixed(2)}</span>
+              <span className="text-sm font-black text-white">৳{totalApprovedAmount.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -472,7 +472,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                         </div>
                         <p className="text-[10px] text-gray-300 mt-0.5 max-w-[200px] truncate">{claim.taskTitle}</p>
                         <p className="text-[10px] font-extrabold text-emerald-400 mt-1">
-                          Reward: ${claim.earnedAmount.toFixed(4)} USDT (x{claim.multiplier.toFixed(1)} boost)
+                          Reward: ৳{claim.earnedAmount.toFixed(2)} BDT (x{claim.multiplier.toFixed(1)} boost)
                         </p>
                         <p className="text-[8px] text-gray-600 mt-0.5">{new Date(claim.createdAt).toLocaleString()}</p>
                       </div>
@@ -523,7 +523,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                       <span className="font-bold text-white">{req.userName}</span>
                       <span className="text-[8px] text-gray-400 font-bold bg-white/5 px-1.5 py-0.2 rounded uppercase">{req.gateway}</span>
                     </div>
-                    <p className="text-[10px] font-extrabold text-emerald-400 mt-1">Amount: ${req.amount.toFixed(2)} USDT</p>
+                    <p className="text-[10px] font-extrabold text-emerald-400 mt-1">Amount: ৳{req.amount.toFixed(2)} BDT</p>
                     <p className="text-[9px] text-gray-500 truncate max-w-[210px] mt-0.5">Address: {req.walletAddress}</p>
                     <p className="text-[8px] text-gray-600 mt-0.5">{new Date(req.createdAt).toLocaleString()}</p>
                   </div>
@@ -623,7 +623,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                 </div>
                 <div>
                   <label className="text-[9px] text-gray-400 font-bold uppercase tracking-wider block mb-1">Reward</label>
-                  <input type="number" step="0.001" placeholder="0.05"
+                  <input type="number" step="0.5" placeholder="5"
                     value={reward} onChange={(e) => setReward(e.target.value)}
                     className="w-full py-2 px-2 glass-input text-xs font-semibold" required />
                 </div>
@@ -677,7 +677,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                       )}
                     </div>
                     <span className="text-[9px] text-gray-400">
-                      ${task.reward.toFixed(3)} | {task.timer}s | {task.claimedCount}/{task.targetLimit}
+                       ৳{task.reward.toFixed(2)} | {task.timer}s | {task.claimedCount}/{task.targetLimit}
                     </span>
                   </div>
                   <button onClick={() => handleDeleteTask(task.id)}
@@ -701,7 +701,7 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
           <div className="space-y-3.5">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[9px] text-gray-400 font-bold uppercase tracking-wider block mb-1">Set USDT Balance</label>
+                <label className="text-[9px] text-gray-400 font-bold uppercase tracking-wider block mb-1">Set BDT Balance</label>
                 <input type="number" step="0.01"
                   value={testBalance} onChange={(e) => setTestBalance(e.target.value)}
                   className="w-full py-2 px-3 glass-input text-xs font-semibold" />

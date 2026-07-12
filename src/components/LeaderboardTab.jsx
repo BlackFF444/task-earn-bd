@@ -17,7 +17,7 @@ const MILESTONES = [
     id: 'm-1',
     title: 'Task Apprentice',
     description: 'Complete 3 social tasks on the platform',
-    reward: 0.02,
+    reward: 2,
     type: 'Daily',
     requirement: { type: 'tasks', count: 3 }
   },
@@ -25,7 +25,7 @@ const MILESTONES = [
     id: 'm-2',
     title: 'Community Builder',
     description: 'Invite 1 friend to join the platform',
-    reward: 0.05,
+    reward: 5,
     type: 'Daily',
     requirement: { type: 'referrals', count: 1 }
   },
@@ -33,7 +33,7 @@ const MILESTONES = [
     id: 'm-3',
     title: 'Task Conqueror',
     description: 'Complete 10 tasks in total',
-    reward: 0.10,
+    reward: 10,
     type: 'Achieve',
     requirement: { type: 'tasks', count: 10 }
   },
@@ -41,7 +41,7 @@ const MILESTONES = [
     id: 'm-4',
     title: 'Task Overlord',
     description: 'Complete 50 tasks in total',
-    reward: 0.50,
+    reward: 50,
     type: 'Achieve',
     requirement: { type: 'tasks', count: 50 }
   },
@@ -49,7 +49,7 @@ const MILESTONES = [
     id: 'm-5',
     title: 'Web3 Networker',
     description: 'Invite 15 friends (Platinum VIP status)',
-    reward: 1.00,
+    reward: 100,
     type: 'Achieve',
     requirement: { type: 'referrals', count: 15 }
   },
@@ -57,7 +57,7 @@ const MILESTONES = [
     id: 'm-6',
     title: 'Launch Event Winner',
     description: 'Join during the platform launch campaign',
-    reward: 0.03,
+    reward: 3,
     type: 'Events',
     requirement: { type: 'tasks', count: 1 }
   }
@@ -123,7 +123,7 @@ function LeaderboardTab({ user, refreshAppState }) {
       });
 
       await refreshAppState();
-      setClaimedAlert(`+$${milestone.reward.toFixed(3)} USDT Milestone Bonus Claimed!`);
+      setClaimedAlert(`+৳${milestone.reward.toFixed(2)} BDT Milestone Bonus Claimed!`);
       setTimeout(() => setClaimedAlert(''), 3000);
     } catch (err) {
       notify('Error claiming milestone: ' + err.message, 'error');
@@ -243,9 +243,9 @@ function LeaderboardTab({ user, refreshAppState }) {
 
                     <div className="text-right">
                       <div className="text-xs font-extrabold text-emerald-400">
-                        ${leadUser.balance.toFixed(3)}
+                        ৳{leadUser.balance.toFixed(2)}
                       </div>
-                      <div className="text-[8px] text-gray-500 uppercase font-bold tracking-wider">USDT</div>
+                      <div className="text-[8px] text-gray-500 uppercase font-bold tracking-wider">BDT</div>
                     </div>
                   </div>
                 );
@@ -267,8 +267,8 @@ function LeaderboardTab({ user, refreshAppState }) {
               </div>
 
               <div className="text-right">
-                <div className="text-xs font-black text-emerald-400">${user.balance.toFixed(3)}</div>
-                <div className="text-[8px] text-gray-400 uppercase font-bold tracking-wider">USDT Balance</div>
+                <div className="text-xs font-black text-emerald-400">৳{user.balance.toFixed(2)}</div>
+                <div className="text-[8px] text-gray-400 uppercase font-bold tracking-wider">BDT Balance</div>
               </div>
             </div>
           </motion.div>
@@ -370,9 +370,9 @@ function LeaderboardTab({ user, refreshAppState }) {
 
                       <div className="text-right">
                         <span className="text-[11px] font-extrabold text-emerald-400 block">
-                          +${milestone.reward.toFixed(3)}
+                           ৳{milestone.reward.toFixed(2)}
                         </span>
-                        <span className="text-[8px] text-gray-500 uppercase font-bold tracking-wider">USDT</span>
+                        <span className="text-[8px] text-gray-500 uppercase font-bold tracking-wider">BDT</span>
                       </div>
                     </div>
 

@@ -135,7 +135,7 @@ function ProofUploadModal({ task, onClose, onSubmit, userMultiplier }) {
           ) : (
             <>
               <CheckCircle className="w-4 h-4" />
-              <span>Submit Proof & Claim +${(task.reward * userMultiplier).toFixed(4)} USDT</span>
+              <span>Submit Proof & Claim ৳{(task.reward * userMultiplier).toFixed(2)} BDT</span>
             </>
           )}
         </button>
@@ -253,7 +253,7 @@ function TasksTab({ user, tasks, refreshAppState }) {
       <div className="p-1 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-white">Micro Tasks</h2>
-          <p className="text-xs text-gray-400">Complete tasks to earn instant crypto rewards.</p>
+          <p className="text-xs text-gray-400">Complete tasks to earn instant BDT rewards.</p>
         </div>
         <div className="text-right">
           <div className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 inline-block uppercase">
@@ -357,9 +357,9 @@ function TasksTab({ user, tasks, refreshAppState }) {
                   <div className="text-right flex flex-col items-end justify-between self-stretch">
                     <div>
                       <span className="text-xs font-extrabold text-emerald-400">
-                        +${(task.reward * userMultiplier).toFixed(3)}
+                         ৳{(task.reward * userMultiplier).toFixed(2)}
                       </span>
-                      <span className="text-[8px] text-gray-500 block uppercase font-bold tracking-wider">USDT</span>
+                      <span className="text-[8px] text-gray-500 block uppercase font-bold tracking-wider">BDT</span>
                     </div>
 
                     <div className="mt-2">

@@ -11,7 +11,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
   const { t, notify } = useApp();
 
   const [copied, setCopied] = useState(false);
-  const [gateway, setGateway] = useState('TRC20');
+  const [gateway, setGateway] = useState('bKash');
   const [amount, setAmount] = useState('');
   const [address, setAddress] = useState('');
   const [withdrawing, setWithdrawing] = useState(false);
@@ -44,17 +44,17 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
     const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
     const tg = window.Telegram?.WebApp;
     if (tg?.openTelegramLink) {
-      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`);
+      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`);
     } else {
-      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`, '_blank');
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`, '_blank');
     }
   };
 
   const handleWithdrawSubmit = async (e) => {
     e.preventDefault();
     const numAmount = parseFloat(amount);
-    if (isNaN(numAmount) || numAmount < 0.50) {
-      notify('Minimum withdrawal is $0.50 USDT.', 'error');
+    if (isNaN(numAmount) || numAmount < 50) {
+      notify('Minimum withdrawal is ৳50 BDT.', 'error');
       return;
     }
     if (numAmount > user.balance) {
@@ -71,7 +71,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
       await refreshAppState();
       setAmount('');
       setAddress('');
-      notify(`Withdrawal of $${numAmount.toFixed(2)} submitted! Status: Pending. ⏳`, 'success');
+      notify(`Withdrawal of ৳${numAmount.toFixed(2)} submitted! Status: Pending. ⏳`, 'success');
     } catch (err) {
       notify(err.message || 'Withdrawal failed.', 'error');
     } finally {
@@ -147,7 +147,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
           </div>
           <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center">
             <span className="text-[10px] text-gray-500 block uppercase font-bold tracking-wider mb-1">{t('commission')}</span>
-            <span className="text-base font-extrabold text-emerald-400">${(user.referralCount * 0.05).toFixed(2)} <span className="text-[10px] text-gray-400">USDT</span></span>
+            <span className="text-base font-extrabold text-emerald-400">৳{(user.referralCount * 5).toFixed(2)} <span className="text-[10px] text-gray-400">BDT</span></span>
           </div>
         </div>
       </div>
@@ -162,12 +162,12 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
           <div>
             <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1.5">Select Network/Gateway</label>
             <div className="grid grid-cols-3 gap-1">
-              {['TRC20', 'TON', 'ERC20', 'bKash', 'Nagad', 'Rocket'].map((net) => (
+              {['bKash', 'Nagad'].map((net) => (
                 <button
                   key={net}
                   type="button"
                   onClick={() => setGateway(net)}
-                  className={`py-2 rounded-xl text-[10px] font-bold border transition-all ${
+                  className={`py-2 rounded-xl text-[10px] font-bold border transition-all flex-1 ${
                     gateway === net
                       ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 shadow-sm'
                       : 'bg-black/20 border-white/5 text-gray-400 hover:text-gray-200'
@@ -180,23 +180,23 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1.5">Amount (USDT)</label>
+              <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1.5">Amount (BDT)</label>
               <div className="relative">
                 <input
-                  type="number" step="0.01" min="0.50" placeholder="Min $0.50"
+                  type="number" step="1" min="50" placeholder="Min ৳50"
                   value={amount} onChange={(e) => setAmount(e.target.value)}
-                  className="w-full py-2 px-3 pl-7 glass-input text-xs font-semibold" required
+                  className="w-full py-2 px-3 glass-input text-xs font-semibold" required
                 />
-                <DollarSign className="w-3.5 h-3.5 text-gray-500 absolute left-2 top-2.5" />
+                <span className="text-gray-500 absolute left-2 top-2.5 text-xs font-bold">৳</span>
               </div>
             </div>
             <div>
               <label className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1.5">
-                {['bKash', 'Nagad', 'Rocket'].includes(gateway) ? 'Mobile Number' : 'Crypto Address'}
+                Mobile Number
               </label>
               <input
                 type="text"
-                placeholder={['bKash', 'Nagad', 'Rocket'].includes(gateway) ? '017XXXXXXXX' : '0x... or U...'}
+                placeholder="017XXXXXXXX"
                 value={address} onChange={(e) => setAddress(e.target.value)}
                 className="w-full py-2 px-3 glass-input text-xs font-semibold" required
               />
@@ -232,7 +232,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
               <div key={item.id} className="p-3 bg-black/25 border border-white/5 rounded-xl flex items-center justify-between gap-3 text-xs">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-white">${item.amount.toFixed(2)} USDT</span>
+                    <span className="font-extrabold text-white">৳{item.amount.toFixed(2)} BDT</span>
                     <span className="text-[9px] text-gray-400 font-bold bg-white/5 px-2 py-0.2 rounded border border-white/5 uppercase">{item.gateway}</span>
                   </div>
                   <p className="text-[9px] text-gray-500 mt-1 truncate max-w-[190px]">To: {item.walletAddress}</p>

@@ -7,7 +7,7 @@ import {
 import { dbService, getMultiplier, getVIPLevelName } from '../services/firebase';
 import { useApp } from '../context/AppContext';
 
-const STREAK_REWARDS = [0.005, 0.010, 0.015, 0.020, 0.025, 0.035, 0.050];
+  const STREAK_REWARDS = [0.5, 1, 1.5, 2, 2.5, 3.5, 5];
 
 // Simple mini bar chart component
 function MiniBarChart({ data, color = '#a855f7' }) {
@@ -85,8 +85,8 @@ function HomeTab({ user, refreshAppState, tasks }) {
       await refreshAppState();
       notify(
         result.isStreakBroken
-          ? `Streak reset! Day 1 reward: $${result.reward} USDT! 🔥`
-          : `Day ${result.streakCount} claimed! Got $${result.reward} USDT! 🎉`,
+          ? `Streak reset! Day 1 reward: ৳${result.reward} BDT! 🔥`
+          : `Day ${result.streakCount} claimed! Got ৳${result.reward} BDT! 🎉`,
         'success'
       );
     } catch (err) {
@@ -122,12 +122,12 @@ function HomeTab({ user, refreshAppState, tasks }) {
 
   const handleShareReferral = () => {
     const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
-    const text = encodeURIComponent(`Join Task Earn BD and earn USDT! Use my referral link:\n\n${link}`);
+    const text = encodeURIComponent(`Join Task Earn BD and earn BDT! Use my referral link:\n\n${link}`);
     const tg = window.Telegram?.WebApp;
     if (tg?.openTelegramLink) {
-      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`);
+      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`);
     } else {
-      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn USDT!')}`, '_blank');
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`, '_blank');
     }
   };
 
@@ -143,7 +143,7 @@ function HomeTab({ user, refreshAppState, tasks }) {
   else if (user.referralCount < 15) { nextTierRefNeed = 15 - user.referralCount; nextTierName = 'Platinum VIP (x2.0)'; }
 
   const referralLink = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
-  const commissionEarned = (user.referralCount * 0.05).toFixed(2);
+  const commissionEarned = (user.referralCount * 5).toFixed(2);
 
   return (
     <motion.div
@@ -338,7 +338,7 @@ function HomeTab({ user, refreshAppState, tasks }) {
                         <Zap className="w-4 h-4 text-violet-400 fill-violet-400/20" />
                       )}
                     </div>
-                    <span className="text-[8px] font-bold mt-1 text-gray-300">${reward.toFixed(3)}</span>
+                    <span className="text-[8px] font-bold mt-1 text-gray-300">৳{reward.toFixed(3)}</span>
                   </div>
                 );
               })}
@@ -399,8 +399,8 @@ function HomeTab({ user, refreshAppState, tasks }) {
               <h3 className="text-sm font-bold text-white">{t('earningsGraph')}</h3>
             </div>
             <div className="mb-2">
-              <span className="text-2xl font-black text-white">${user.balance.toFixed(4)}</span>
-              <span className="text-xs text-gray-400 ml-2">USDT Total</span>
+              <span className="text-2xl font-black text-white">৳{user.balance.toFixed(2)}</span>
+              <span className="text-xs text-gray-400 ml-2">BDT Total</span>
             </div>
             <MiniBarChart data={earningsData} color="#a855f7" />
           </div>
@@ -492,8 +492,8 @@ function HomeTab({ user, refreshAppState, tasks }) {
               </div>
               <div className="bg-black/25 border border-white/5 p-3 rounded-xl text-center">
                 <span className="text-[9px] text-gray-500 block uppercase font-bold tracking-wider mb-1">{t('commission')}</span>
-                <span className="text-2xl font-black text-emerald-400">${commissionEarned}</span>
-                <span className="text-[8px] text-gray-500 block">USDT</span>
+                <span className="text-2xl font-black text-emerald-400">৳{commissionEarned}</span>
+                <span className="text-[8px] text-gray-500 block">BDT</span>
               </div>
             </div>
 

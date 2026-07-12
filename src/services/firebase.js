@@ -15,17 +15,17 @@ const DEFAULT_TASKS = [
   {
     id: 'task-1',
     title: 'Join Task Earn Bd Official Telegram Channel',
-    reward: 0.05,
+    reward: 3,
     category: 'Telegram',
     url: 'https://t.me/task_earn_bd',
-    timer: 10, // seconds
+    timer: 10,
     claimedCount: 142,
     targetLimit: 500,
   },
   {
     id: 'task-2',
     title: 'Follow our Founder on X (Twitter)',
-    reward: 0.04,
+    reward: 2,
     category: 'Twitter',
     url: 'https://twitter.com/task_earn_bd',
     timer: 12,
@@ -34,18 +34,18 @@ const DEFAULT_TASKS = [
   },
   {
     id: 'task-3',
-    title: 'Watch & Like YouTube Video: Cryptocurrencies for Beginners',
-    reward: 0.08,
+    title: 'Watch & Like YouTube Video: Beginner Guide to BDT Crypto',
+    reward: 5,
     category: 'YouTube',
     url: 'https://youtube.com',
     timer: 15,
     claimedCount: 299,
-    targetLimit: 300, // Close to limit to show sold out functionality
+    targetLimit: 300,
   },
   {
     id: 'task-4',
     title: 'Share our project page on Facebook',
-    reward: 0.03,
+    reward: 1.5,
     category: 'Facebook',
     url: 'https://facebook.com',
     timer: 8,
@@ -58,7 +58,7 @@ const DEFAULT_TASKS = [
 const DEFAULT_USERS = [];
 
 // Build version - clear stale data on update
-const APP_VERSION = '4.0.0';
+const APP_VERSION = '5.0.0';
 const VERSION_KEY = 'task_earn_bd_version';
 
 const checkAndClearStaleData = () => {
@@ -180,7 +180,7 @@ export const authService = {
         if (referrer && referrer.id !== user.id) {
           referrer.referralCount = (referrer.referralCount || 0) + 1;
           user.referredBy = referrer.id;
-          user.balance = parseFloat((user.balance + 0.01).toFixed(4)); // Welcome bonus
+          user.balance = parseFloat((user.balance + 0.5).toFixed(4)); // Welcome bonus
           saveToStorage(STORAGE_KEYS.USERS, users);
         }
       }
@@ -392,7 +392,7 @@ export const dbService = {
     if (userIndex === -1) throw new Error('User not found');
     const user = users[userIndex];
 
-    const STREAK_REWARDS = [0.005, 0.010, 0.015, 0.020, 0.025, 0.035, 0.050]; // Day 1 to Day 7
+    const STREAK_REWARDS = [0.5, 1, 1.5, 2, 2.5, 3.5, 5];
 
     const now = new Date();
     let isStreakBroken = false;
@@ -546,7 +546,7 @@ export const dbService = {
     const totalCompletedTasks = users.reduce((sum, u) => sum + u.completedTasks.length, 0);
 
     return {
-      totalUSDT: parseFloat(totalDistributed.toFixed(2)),
+      totalBDT: parseFloat(totalDistributed.toFixed(2)),
       totalUsers: users.length,
       completedTasks: totalCompletedTasks,
     };
