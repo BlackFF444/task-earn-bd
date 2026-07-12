@@ -111,7 +111,7 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
           <img src={user.photoURL} alt={user.name} className="w-12 h-12 rounded-full border-2 border-violet-500/20 bg-slate-900 object-cover" />
           <div>
             <h3 className="text-sm font-bold text-white">{user.name}</h3>
-            <p className="text-[10px] text-gray-400">{user.email}</p>
+            <p className="text-[10px] text-gray-400">{user.telegramUsername ? `@${user.telegramUsername}` : user.name}</p>
           </div>
         </div>
         <button

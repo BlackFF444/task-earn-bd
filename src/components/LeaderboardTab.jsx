@@ -63,6 +63,7 @@ const MILESTONES = [
 ];
 
 function LeaderboardTab({ user, refreshAppState }) {
+  const { t, notify } = useApp();
   const [subTab, setSubTab] = useState('leaderboard'); // leaderboard or milestones
   const [milestoneType, setMilestoneType] = useState('All'); // All, Achieve, Daily, Events
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -100,14 +101,14 @@ function LeaderboardTab({ user, refreshAppState }) {
       // Load current user's claimed milestones (mock field initialize)
       const claimedList = user.claimedMilestones || [];
       if (claimedList.includes(milestone.id)) {
-        alert("Milestone already claimed!");
+        notify('Milestone already claimed!', 'warning');
         return;
       }
 
       // Calculate progress to verify
       const progress = getMilestoneProgress(milestone.requirement);
       if (progress < milestone.requirement.count) {
-        alert("You have not met the requirements for this milestone yet!");
+        notify('You have not met the requirements for this milestone yet!', 'warning');
         return;
       }
 
@@ -124,7 +125,7 @@ function LeaderboardTab({ user, refreshAppState }) {
       setClaimedAlert(`+$${milestone.reward.toFixed(3)} USDT Milestone Bonus Claimed!`);
       setTimeout(() => setClaimedAlert(''), 3000);
     } catch (err) {
-      alert("Error claiming milestone: " + err.message);
+      notify('Error claiming milestone: ' + err.message, 'error');
     } finally {
       setClaimingId(null);
     }
