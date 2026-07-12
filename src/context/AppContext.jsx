@@ -36,8 +36,6 @@ export const translations = {
     uploadProof: 'Upload Screenshot Proof',
     submitProof: 'Submit Proof',
     // Profile/Wallet
-    dailyQuiz: 'Daily Crypto Quiz',
-    submitAnswer: 'Submit Answer',
     withdrawal: 'Withdrawal Portal',
     withdrawHistory: 'Withdrawal History',
     myStats: 'My Stats',
@@ -101,8 +99,6 @@ export const translations = {
     uploadProof: 'স্ক্রিনশট প্রমাণ আপলোড করুন',
     submitProof: 'প্রমাণ জমা দিন',
     // Profile/Wallet
-    dailyQuiz: 'দৈনিক ক্রিপ্টো কুইজ',
-    submitAnswer: 'উত্তর জমা দিন',
     withdrawal: 'উইথড্রয়াল পোর্টাল',
     withdrawHistory: 'উইথড্রয়াল ইতিহাস',
     myStats: 'আমার পরিসংখ্যান',

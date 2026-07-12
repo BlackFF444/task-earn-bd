@@ -82,6 +82,9 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
   const [annMessage, setAnnMessage] = useState('');
   const [sendingAnn, setSendingAnn] = useState(false);
 
+  // Claims filter
+  const [claimsFilter, setClaimsFilter] = useState('Pending');
+
   const handleVerifyPassword = (e) => {
     e.preventDefault();
     setAuthError('');
@@ -210,6 +213,9 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
 
   // Analytics derived stats
   const pendingRequests = withdrawals.filter(w => w.status === 'Pending');
+  const filteredClaims = claimsFilter === 'All'
+    ? pendingTaskClaims
+    : pendingTaskClaims.filter(c => c.status === claimsFilter);
   const pendingTaskClaimsList = pendingTaskClaims.filter(c => c.status === 'Pending');
   const approvedWithdrawals = withdrawals.filter(w => w.status === 'Approved');
   const totalApprovedAmount = approvedWithdrawals.reduce((s, w) => s + w.amount, 0);
@@ -417,14 +423,31 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
       {/* ── TASK APPROVALS ── */}
       {adminSection === 'taskApprovals' && (
         <div className="space-y-4">
-          <h3 className="text-sm font-bold text-white">Pending Task Approvals ({pendingTaskClaimsList.length})</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-white">Task Claims ({filteredClaims.length})</h3>
+            <div className="flex gap-1">
+              {['All', 'Pending', 'Approved', 'Rejected'].map(f => (
+                <button
+                  key={f}
+                  onClick={() => setClaimsFilter(f)}
+                  className={`px-2.5 py-1 rounded-lg text-[9px] font-bold border transition-all ${
+                    claimsFilter === f
+                      ? 'bg-pink-500/20 border-pink-500/40 text-pink-300'
+                      : 'bg-black/20 border-white/5 text-gray-500 hover:text-gray-300'
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="space-y-2 max-h-[380px] overflow-y-auto pr-0.5">
-            {pendingTaskClaimsList.length === 0 ? (
+            {filteredClaims.length === 0 ? (
               <div className="p-8 bg-white/[0.02] border border-white/5 rounded-xl text-center text-xs text-gray-500">
-                No pending task claims to review.
+                No {claimsFilter === 'All' ? '' : claimsFilter.toLowerCase()} task claims found.
               </div>
             ) : (
-              pendingTaskClaimsList.map((claim) => (
+              filteredClaims.map((claim) => (
                 <div key={claim.id} className="p-3 bg-black/25 border border-white/5 rounded-xl flex flex-col gap-3 text-xs">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3">
@@ -437,6 +460,11 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-white">{claim.userName}</span>
                           <span className="text-[8px] text-gray-400 font-bold bg-white/5 px-1.5 py-0.2 rounded uppercase">{claim.taskCategory}</span>
+                          <span className={`text-[7px] font-black px-1.5 py-0.5 rounded ${
+                            claim.status === 'Approved' ? 'bg-emerald-500/20 text-emerald-400' :
+                            claim.status === 'Rejected' ? 'bg-rose-500/20 text-rose-400' :
+                            'bg-amber-500/20 text-amber-400'
+                          }`}>{claim.status}</span>
                         </div>
                         <p className="text-[10px] text-gray-300 mt-0.5 max-w-[200px] truncate">{claim.taskTitle}</p>
                         <p className="text-[10px] font-extrabold text-emerald-400 mt-1">
@@ -445,14 +473,16 @@ function AdminTab({ user, tasks, withdrawals, pendingTaskClaims, globalStats, re
                         <p className="text-[8px] text-gray-600 mt-0.5">{new Date(claim.createdAt).toLocaleString()}</p>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <button onClick={() => handleApproveTaskClaim(claim.id)} className="p-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 rounded-lg active:scale-95 transition-all">
-                        <Check className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleRejectTaskClaim(claim.id)} className="p-1.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 rounded-lg active:scale-95 transition-all">
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
+                    {claim.status === 'Pending' && (
+                      <div className="flex flex-col gap-1.5">
+                        <button onClick={() => handleApproveTaskClaim(claim.id)} className="p-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 rounded-lg active:scale-95 transition-all">
+                          <Check className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => handleRejectTaskClaim(claim.id)} className="p-1.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 rounded-lg active:scale-95 transition-all">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                   {claim.proofImage && (
                     <div className="mt-1">

@@ -7,7 +7,7 @@ const STORAGE_KEYS = {
   WITHDRAWALS: 'task_earn_bd_withdrawals',
   PENDING_TASK_CLAIMS: 'task_earn_bd_pending_claims',
   CURRENT_USER: 'task_earn_bd_curr_user',
-  QUIZ_LAST_TAKEN: 'task_earn_bd_quiz_taken',
+
 };
 
 // Seed initial tasks if none exist
@@ -59,7 +59,6 @@ const DEFAULT_USERS = [
   {
     id: 'mock-user-1',
     name: 'Sabbir Rahman',
-    email: 'sabbir@gmail.com',
     photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=sabbir',
     balance: 12.45,
     referralCode: 'SABBIR77',
@@ -71,7 +70,6 @@ const DEFAULT_USERS = [
   {
     id: 'mock-user-2',
     name: 'Tahsan Khan',
-    email: 'tahsan@gmail.com',
     photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=tahsan',
     balance: 5.82,
     referralCode: 'TAHSAN99',
@@ -83,7 +81,6 @@ const DEFAULT_USERS = [
   {
     id: 'mock-user-3',
     name: 'Anika Tabassum',
-    email: 'anika@gmail.com',
     photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=anika',
     balance: 24.15,
     referralCode: 'ANIKA12',
@@ -95,7 +92,6 @@ const DEFAULT_USERS = [
   {
     id: 'mock-user-4',
     name: 'Mahfuz Alam',
-    email: 'mahfuz@gmail.com',
     photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=mahfuz',
     balance: 1.25,
     referralCode: 'MAHFUZ55',
@@ -107,7 +103,6 @@ const DEFAULT_USERS = [
   {
     id: 'mock-user-5',
     name: 'Faria Jahan',
-    email: 'faria@gmail.com',
     photoURL: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=faria',
     balance: 0.45,
     referralCode: 'FARIA777',
@@ -199,7 +194,7 @@ export const authService = {
       };
       
       // Check for referral code in startParam
-      const startParam = tgUser.startParam || tg.initDataUnsafe?.start_param;
+      const startParam = tgUser.startParam;
       if (startParam) {
         const referrer = users.find(u => u.referralCode === startParam);
         if (referrer && referrer.id !== user.id) {
@@ -457,48 +452,6 @@ export const dbService = {
     }
 
     return { reward, streakCount: nextStreakCount, isStreakBroken };
-  },
-
-  // Crypto Quiz
-  submitQuizAnswer: async (userId, isCorrect) => {
-    users = loadFromStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
-    const userIndex = users.findIndex(u => u.id === userId);
-    if (userIndex === -1) throw new Error('User not found');
-    const user = users[userIndex];
-
-    // Check if they already took a quiz today (localstorage lock)
-    const lastQuiz = localStorage.getItem(`${STORAGE_KEYS.QUIZ_LAST_TAKEN}_${userId}`);
-    const now = new Date();
-    if (lastQuiz) {
-      const lastQuizDate = new Date(lastQuiz);
-      if (now.toDateString() === lastQuizDate.toDateString()) {
-        throw new Error('You have already taken today\'s quiz. Come back tomorrow!');
-      }
-    }
-
-    localStorage.setItem(`${STORAGE_KEYS.QUIZ_LAST_TAKEN}_${userId}`, now.toISOString());
-
-    let reward = 0;
-    if (isCorrect) {
-      reward = 0.05; // Quiz correct reward
-      user.balance = parseFloat((user.balance + reward).toFixed(4));
-      users[userIndex] = user;
-      saveToStorage(STORAGE_KEYS.USERS, users);
-      
-      if (currentUser && currentUser.id === userId) {
-        currentUser = user;
-        saveToStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
-      }
-    }
-
-    return { correct: isCorrect, reward };
-  },
-
-  canTakeQuiz: (userId) => {
-    const lastQuiz = localStorage.getItem(`${STORAGE_KEYS.QUIZ_LAST_TAKEN}_${userId}`);
-    if (!lastQuiz) return true;
-    const lastQuizDate = new Date(lastQuiz);
-    return new Date().toDateString() !== lastQuizDate.toDateString();
   },
 
   // Withdrawals
