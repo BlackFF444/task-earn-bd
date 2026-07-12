@@ -160,76 +160,41 @@ export const getVIPLevelName = (referralCount = 0) => {
 
 // Auth Service
 export const authService = {
-  // Login with Telegram WebApp
+  // Login with Telegram WebApp (primary login method)
   loginWithTelegram: async () => {
     const { telegramService } = await import('./telegram');
     
-    if (telegramService.isTelegramWebApp()) {
-      telegramService.init();
-      const tgUser = telegramService.getUser();
-      
-      if (tgUser) {
-        users = loadFromStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
-        
-        const email = `tg_${tgUser.id}@telegram.user`;
-        let user = users.find(u => u.email === email);
-        
-        if (!user) {
-          const fullName = `${tgUser.firstName} ${tgUser.lastName}`.trim();
-          user = {
-            id: 'tg-' + tgUser.id,
-            name: fullName,
-            email: email,
-            photoURL: tgUser.photoUrl || `https://api.dicebear.com/7.x/adventurer/svg?seed=${fullName.replace(/\s/g, '')}`,
-            balance: 0.00,
-            referralCode: generateReferralCode(fullName),
-            referralCount: 0,
-            streakCount: 0,
-            lastCheckIn: null,
-            completedTasks: [],
-            telegramId: tgUser.id,
-            telegramUsername: tgUser.username,
-            isPremium: tgUser.isPremium,
-          };
-          users.push(user);
-          saveToStorage(STORAGE_KEYS.USERS, users);
-        }
-        
-        currentUser = user;
-        saveToStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
-        return currentUser;
-      }
+    if (!telegramService.isTelegramWebApp()) {
+      throw new Error('This app can only be used inside Telegram Messenger');
     }
     
-    // Fallback to demo mode
-    return authService.loginWithGoogle();
-  },
-
-  // Demo login (for testing outside Telegram)
-  loginWithGoogle: async () => {
-    await new Promise(resolve => setTimeout(resolve, 800));
+    telegramService.init();
+    const tgUser = telegramService.getUser();
     
-    const mockNames = ['Jahid Hasan', 'Rashedul Islam', 'Nusrat Jahan', 'Imran Hossain', 'Sumaiya Aktar'];
-    const selectedName = mockNames[Math.floor(Math.random() * mockNames.length)] + ` (${Math.floor(Math.random() * 90) + 10})`;
-    const email = selectedName.toLowerCase().replace(/[^a-z0-9]/g, '') + '@gmail.com';
-    const seed = selectedName.replace(/\s/g, '');
-    const photoURL = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}`;
-
+    if (!tgUser) {
+      throw new Error('Could not retrieve Telegram user data');
+    }
+    
     users = loadFromStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
     
-    let user = users.find(u => u.email === email);
+    // Use telegramId as unique identifier for data isolation
+    let user = users.find(u => u.telegramId === tgUser.id);
+    
     if (!user) {
+      const fullName = `${tgUser.firstName} ${tgUser.lastName}`.trim();
       user = {
-        id: 'user-' + Date.now(),
-        name: selectedName,
-        email: email,
-        photoURL: photoURL,
+        id: 'tg-' + tgUser.id,
+        telegramId: tgUser.id,
+        name: fullName,
+        photoURL: tgUser.photoUrl || `https://api.dicebear.com/7.x/adventurer/svg?seed=${fullName.replace(/\s/g, '')}`,
         balance: 0.00,
-        referralCode: generateReferralCode(selectedName),
+        referralCode: generateReferralCode(fullName),
         referralCount: 0,
         streakCount: 0,
         lastCheckIn: null,
         completedTasks: [],
+        telegramUsername: tgUser.username,
+        isPremium: tgUser.isPremium,
       };
       users.push(user);
       saveToStorage(STORAGE_KEYS.USERS, users);
