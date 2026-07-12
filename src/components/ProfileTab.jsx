@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Wallet, Copy, Check, HelpCircle, ArrowUpRight, History,
+  Wallet, Copy, Check, ArrowUpRight, History,
   LogOut, CheckCircle, XCircle, Clock, DollarSign, Share2
 } from 'lucide-react';
 import { dbService } from '../services/firebase';
 import { useApp } from '../context/AppContext';
 
-const QUIZ_QUESTIONS = [
-  { question: "Which cryptocurrency is known as the 'Digital Gold'?", options: ["Bitcoin", "Ethereum", "Solana", "Cardano"], correctAnswer: 0 },
-  { question: "What does HODL stand for in the crypto community?", options: ["Hold On for Dear Life", "Hold On Don't Leave", "Heaven of Digital Loot", "High Option Derivative Leverage"], correctAnswer: 0 },
-  { question: "Who is the anonymous creator of Bitcoin?", options: ["Satoshi Nakamoto", "Vitalik Buterin", "Charles Hoskinson", "Elon Musk"], correctAnswer: 0 },
-  { question: "Solana uses which consensus mechanism primarily?", options: ["Proof of History", "Proof of Work", "Proof of Burn", "Proof of Authority"], correctAnswer: 0 },
-  { question: "In what year was Bitcoin launched?", options: ["2008", "2009", "2010", "2015"], correctAnswer: 1 },
-];
-
 function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
   const { t, notify } = useApp();
-
-  const [canTakeQuiz, setCanTakeQuiz] = useState(true);
-  const [quizQuestion, setQuizQuestion] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [quizSubmitted, setQuizSubmitted] = useState(false);
-  const [quizResult, setQuizResult] = useState(null);
 
   const [copied, setCopied] = useState(false);
   const [gateway, setGateway] = useState('TRC20');
@@ -30,39 +16,12 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
   const [address, setAddress] = useState('');
   const [withdrawing, setWithdrawing] = useState(false);
 
-  useEffect(() => {
-    const allowed = dbService.canTakeQuiz(user.id);
-    setCanTakeQuiz(allowed);
-    const dayOfMonth = new Date().getDate();
-    setQuizQuestion(QUIZ_QUESTIONS[dayOfMonth % QUIZ_QUESTIONS.length]);
-  }, [user]);
-
   const handleCopyLink = () => {
     const link = `https://t.me/task_earn_bd_bot?start=${user.referralCode}`;
     navigator.clipboard.writeText(link).catch(() => {});
     setCopied(true);
     notify('Referral link copied! 🔗', 'success');
     setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleQuizSubmit = async () => {
-    if (selectedOption === null) return;
-    setQuizSubmitted(true);
-    try {
-      const isCorrect = selectedOption === quizQuestion.correctAnswer;
-      const res = await dbService.submitQuizAnswer(user.id, isCorrect);
-      await refreshAppState();
-      setQuizResult(res);
-      setCanTakeQuiz(false);
-      if (res.correct) {
-        notify(`Correct! +$${res.reward.toFixed(3)} USDT earned! 🎉`, 'success');
-      } else {
-        notify('Incorrect answer. Better luck tomorrow!', 'warning');
-      }
-    } catch (err) {
-      notify(err.message || 'Quiz error.', 'error');
-      setQuizSubmitted(false);
-    }
   };
 
   const handleWithdrawSubmit = async (e) => {
@@ -156,67 +115,6 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
             <span className="text-base font-extrabold text-emerald-400">${(user.referralCount * 0.05).toFixed(2)} <span className="text-[10px] text-gray-400">USDT</span></span>
           </div>
         </div>
-      </div>
-
-      {/* Daily Crypto Quiz */}
-      <div className="glass-card p-4 rounded-2xl">
-        <div className="flex items-center gap-2 mb-3">
-          <HelpCircle className="w-4 h-4 text-violet-400" />
-          <h3 className="text-sm font-bold text-white">{t('dailyQuiz')}</h3>
-        </div>
-        {canTakeQuiz && quizQuestion ? (
-          <div className="space-y-3">
-            <p className="text-xs text-violet-200 bg-violet-500/5 border border-violet-500/10 p-3 rounded-xl">
-              {quizQuestion.question}
-            </p>
-            <div className="space-y-2">
-              {quizQuestion.options.map((option, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedOption(idx)}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs text-left border transition-all ${
-                    selectedOption === idx
-                      ? 'bg-violet-500/15 border-violet-500 text-white font-bold'
-                      : 'bg-black/20 border-white/5 text-gray-400 hover:text-gray-200 hover:border-white/10'
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={handleQuizSubmit}
-              disabled={selectedOption === null || quizSubmitted}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-xs font-bold shadow-md shadow-violet-500/10 active:scale-[0.98] transition-all disabled:opacity-50"
-            >
-              {quizSubmitted ? 'Submitting...' : t('submitAnswer')}
-            </button>
-          </div>
-        ) : (
-          <div className="p-3 bg-white/5 border border-white/5 rounded-xl text-center">
-            {quizResult ? (
-              <div className="space-y-1.5">
-                <p className="text-xs font-bold text-white flex items-center justify-center gap-1.5">
-                  {quizResult.correct ? (
-                    <><CheckCircle className="w-4 h-4 text-emerald-400" /><span className="text-emerald-400">Correct Answer!</span></>
-                  ) : (
-                    <><XCircle className="w-4 h-4 text-rose-400" /><span className="text-rose-400">Incorrect Answer</span></>
-                  )}
-                </p>
-                <p className="text-[10px] text-gray-400">
-                  {quizResult.correct
-                    ? `You earned $${quizResult.reward.toFixed(3)} USDT bonus!`
-                    : 'Better luck tomorrow! Keep studying.'}
-                </p>
-              </div>
-            ) : (
-              <p className="text-xs text-gray-400 flex items-center justify-center gap-1.5 py-1">
-                <Clock className="w-4 h-4 text-violet-400 animate-pulse" />
-                <span>Daily Quiz taken! Come back tomorrow.</span>
-              </p>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Withdrawal Form */}
