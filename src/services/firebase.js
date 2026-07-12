@@ -113,18 +113,47 @@ const DEFAULT_USERS = [
   }
 ];
 
+// Build version - clear stale data on update
+const APP_VERSION = '1.1.0';
+const VERSION_KEY = 'task_earn_bd_version';
+
+const checkAndClearStaleData = () => {
+  try {
+    const storedVersion = localStorage.getItem(VERSION_KEY);
+    if (storedVersion !== APP_VERSION) {
+      console.log('Version changed, clearing stale data...');
+      Object.values(STORAGE_KEYS).forEach(key => {
+        try { localStorage.removeItem(key); } catch {}
+      });
+      localStorage.setItem(VERSION_KEY, APP_VERSION);
+    }
+  } catch {}
+};
+checkAndClearStaleData();
+
 // Helper functions for LocalStorage
 const loadFromStorage = (key, defaultValue) => {
-  const data = localStorage.getItem(key);
-  if (!data) {
-    localStorage.setItem(key, JSON.stringify(defaultValue));
+  try {
+    const data = localStorage.getItem(key);
+    if (!data) {
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+      return defaultValue;
+    }
+    const parsed = JSON.parse(data);
+    return parsed;
+  } catch (e) {
+    console.warn('Storage read failed for', key, e);
+    try { localStorage.removeItem(key); } catch {}
     return defaultValue;
   }
-  return JSON.parse(data);
 };
 
 const saveToStorage = (key, data) => {
-  localStorage.setItem(key, JSON.stringify(data));
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    console.warn('Storage write failed for', key, e);
+  }
 };
 
 // Initialize Storage
