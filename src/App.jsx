@@ -79,7 +79,7 @@ function AppInner() {
   const isInTelegram = telegramService.isTelegramWebApp();
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 py-6 select-none transition-colors duration-300 ${
+    <div className={`min-h-screen flex flex-col relative overflow-hidden select-none transition-colors duration-300 ${
       theme === 'dark' ? 'bg-darkBg bg-grid' : 'bg-slate-100 bg-grid-light'
     }`}>
       <ToastContainer />
@@ -92,24 +92,10 @@ function AppInner() {
         </>
       )}
 
-      <div className={`relative p-3 rounded-[44px] border-[4px] flex items-center justify-center ${
-        theme === 'dark'
-          ? 'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border-zinc-700/60 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9),0_0_40px_rgba(168,85,247,0.08)]'
-          : 'bg-gradient-to-br from-zinc-300 via-zinc-200 to-zinc-300 border-zinc-400/80 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.3)]'
+      <div className={`w-full max-w-lg mx-auto min-h-screen backdrop-blur-3xl flex flex-col overflow-hidden relative ${
+        theme === 'dark' ? 'bg-darkBg/98 border-x border-white/[0.08]' : 'bg-white/98 border-x border-slate-200'
       }`}>
-        <div className="absolute left-[-10px] top-[140px] w-[5px] h-[55px] bg-gradient-to-b from-slate-800 to-slate-700 rounded-l border border-slate-600/30" />
-        <div className="absolute left-[-10px] top-[205px] w-[5px] h-[55px] bg-gradient-to-b from-slate-800 to-slate-700 rounded-l border border-slate-600/30" />
-        <div className="absolute right-[-10px] top-[165px] w-[5px] h-[85px] bg-gradient-to-b from-slate-800 to-slate-700 rounded-r border border-slate-600/30" />
-
-        <div className={`w-[390px] max-w-[90vw] h-[780px] backdrop-blur-3xl rounded-[34px] flex flex-col overflow-hidden relative border ${
-          theme === 'dark' ? 'bg-darkBg/98 border-white/[0.08]' : 'bg-white/98 border-slate-200'
-        }`}>
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-28 h-5.5 bg-black rounded-full flex items-center justify-center z-30 shadow-inner">
-            <div className="w-10 h-1 bg-zinc-800 rounded-full opacity-65 mb-1.5" />
-            <div className="absolute bottom-1 right-6 w-1.5 h-1.5 bg-zinc-900 rounded-full" />
-          </div>
-
-          <header className={`pt-8 px-4 pb-3 border-b flex items-center justify-between z-10 ${
+          <header className={`px-4 py-3 border-b flex items-center justify-between z-10 ${
             theme === 'dark' ? 'border-white/[0.04] bg-white/[0.01]' : 'border-slate-200/80 bg-slate-50/60'
           }`}>
             <div className="flex items-center gap-2">
@@ -148,7 +134,7 @@ function AppInner() {
             </div>
           </header>
 
-          <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 relative">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-4 relative">
             {!user ? (
               <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-20 backdrop-blur-md ${theme === 'dark' ? 'bg-[#05060f]/95' : 'bg-white/95'}`}>
                 <div className="w-20 h-20 rounded-[22px] bg-gradient-to-br from-violet-500 via-purple-500 to-pink-500 flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/30 relative overflow-hidden">
@@ -203,7 +189,7 @@ function AppInner() {
           </main>
 
           {user && (
-            <nav className={`absolute bottom-3 left-3 right-3 h-14 backdrop-blur-2xl border rounded-[18px] flex items-center justify-around px-2 z-10 ${theme === 'dark' ? 'bg-[#0a0b1a]/90 border-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.5)]' : 'bg-white/90 border-slate-200/80 shadow-[0_8px_32px_rgba(0,0,0,0.12)]'}`}>
+            <nav className={`sticky bottom-0 h-14 backdrop-blur-2xl border-t flex items-center justify-around px-2 z-10 ${theme === 'dark' ? 'bg-[#0a0b1a]/90 border-white/[0.06] shadow-[0_-4px_20px_rgba(0,0,0,0.3)]' : 'bg-white/90 border-slate-200/80 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]'}`}>
               {[
                 { key: 'home', icon: <Home className="w-[17px] h-[17px]" />, label: t('home') },
                 { key: 'tasks', icon: <CheckSquare className="w-[17px] h-[17px]" />, label: t('tasks') },
@@ -219,7 +205,6 @@ function AppInner() {
             </nav>
           )}
         </div>
-      </div>
     </div>
   );
 }

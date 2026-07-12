@@ -229,8 +229,8 @@ function HomeTab({ user, refreshAppState, tasks }) {
           <div className="glass-card p-4 rounded-2xl relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 rounded-full bg-violet-600/10 blur-xl -z-10" />
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center shadow-lg glow-amber">
-                <Award className="w-6 h-6 text-amber-400" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/20 to-indigo-500/20 border border-violet-500/30 flex items-center justify-center shadow-lg glow-purple">
+                <Zap className="w-6 h-6 text-violet-400" />
               </div>
               <div>
                 <h3 className="text-sm font-bold text-white">{vipName}</h3>

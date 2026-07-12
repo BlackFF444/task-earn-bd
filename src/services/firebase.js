@@ -148,14 +148,14 @@ const generateReferralCode = (name) => {
 
 export const getMultiplier = (referralCount = 0) => {
   if (referralCount >= 15) return 2.0; // Platinum VIP
-  if (referralCount >= 5) return 1.5;  // Gold Club Member
-  return 1.0;                         // Bronze Member
+  if (referralCount >= 5) return 1.5;  // Gold Club
+  return 1.0;
 };
 
 export const getVIPLevelName = (referralCount = 0) => {
   if (referralCount >= 15) return 'Platinum VIP';
-  if (referralCount >= 5) return 'Gold Club Member';
-  return 'Bronze Member';
+  if (referralCount >= 5) return 'Gold Club';
+  return 'Member';
 };
 
 // Auth Service
@@ -195,7 +195,21 @@ export const authService = {
         completedTasks: [],
         telegramUsername: tgUser.username,
         isPremium: tgUser.isPremium,
+        referredBy: null,
       };
+      
+      // Check for referral code in startParam
+      const startParam = tgUser.startParam || tg.initDataUnsafe?.start_param;
+      if (startParam) {
+        const referrer = users.find(u => u.referralCode === startParam);
+        if (referrer && referrer.id !== user.id) {
+          referrer.referralCount = (referrer.referralCount || 0) + 1;
+          user.referredBy = referrer.id;
+          user.balance = parseFloat((user.balance + 0.01).toFixed(4)); // Welcome bonus
+          saveToStorage(STORAGE_KEYS.USERS, users);
+        }
+      }
+      
       users.push(user);
       saveToStorage(STORAGE_KEYS.USERS, users);
     }
@@ -491,6 +505,11 @@ export const dbService = {
   getWithdrawals: async () => {
     withdrawals = loadFromStorage(STORAGE_KEYS.WITHDRAWALS, []);
     return withdrawals;
+  },
+
+  getUserWithdrawals: async (userId) => {
+    withdrawals = loadFromStorage(STORAGE_KEYS.WITHDRAWALS, []);
+    return withdrawals.filter(w => w.userId === userId);
   },
 
   requestWithdrawal: async (userId, amount, gateway, walletAddress) => {

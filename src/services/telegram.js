@@ -44,6 +44,7 @@ export const telegramService = {
       photoUrl: user.photo_url || null,
       languageCode: user.language_code || 'en',
       isPremium: user.is_premium || false,
+      startParam: tg.initDataUnsafe.start_param || null,
     };
   },
 
