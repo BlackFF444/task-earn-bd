@@ -23,11 +23,27 @@ function AppInner() {
   const [pendingTaskClaims, setPendingTaskClaims] = useState([]);
   const [globalStats, setGlobalStats] = useState({ totalUSDT: 0, totalUsers: 0, completedTasks: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isInTelegram, setIsInTelegram] = useState(() => telegramService.isTelegramWebApp());
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Retry Telegram SDK detection (loads async)
+  useEffect(() => {
+    if (isInTelegram) return;
+    let retries = 0;
+    const check = setInterval(() => {
+      if (telegramService.isTelegramWebApp()) {
+        setIsInTelegram(true);
+        clearInterval(check);
+      }
+      retries++;
+      if (retries > 20) clearInterval(check); // stop after 2s
+    }, 100);
+    return () => clearInterval(check);
+  }, [isInTelegram]);
 
   const fetchData = async () => {
     try {
@@ -78,8 +94,6 @@ function AppInner() {
   };
 
   const formatClock = (date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-
-  const isInTelegram = telegramService.isTelegramWebApp();
 
   return (
     <div className={`min-h-screen flex flex-col relative overflow-hidden select-none transition-colors duration-300 ${

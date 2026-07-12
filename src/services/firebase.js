@@ -114,7 +114,7 @@ const DEFAULT_USERS = [
 ];
 
 // Build version - clear stale data on update
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '3.0.0';
 const VERSION_KEY = 'task_earn_bd_version';
 
 const checkAndClearStaleData = () => {

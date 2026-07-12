@@ -1,7 +1,8 @@
 // Telegram WebApp SDK Integration
 // Docs: https://core.telegram.org bots/webapps
 
-const tg = window.Telegram?.WebApp;
+// Always read fresh — SDK may load async after this module
+const getTg = () => window.Telegram?.WebApp;
 
 export const telegramService = {
   // Check if running inside Telegram
@@ -11,28 +12,25 @@ export const telegramService = {
 
   // Initialize Telegram Mini App
   init: () => {
+    const tg = getTg();
     if (!tg) return false;
     
-    // Request full screen mode
-    tg.requestFullscreen();
-    
-    // Disable vertical swipes
-    tg.disableVerticalSwipes();
-    
-    // Set header color
-    tg.setHeaderColor('#05060f');
-    
-    // Set background color
-    tg.setBackgroundColor('#05060f');
-    
-    // Expand the app
-    tg.expand();
+    try {
+      tg.requestFullscreen();
+      tg.disableVerticalSwipes();
+      tg.setHeaderColor('#05060f');
+      tg.setBackgroundColor('#05060f');
+      tg.expand();
+    } catch (e) {
+      console.warn('Telegram init warning:', e);
+    }
     
     return true;
   },
 
   // Get current user data from Telegram
   getUser: () => {
+    const tg = getTg();
     if (!tg?.initDataUnsafe?.user) return null;
     
     const user = tg.initDataUnsafe.user;
@@ -50,11 +48,12 @@ export const telegramService = {
 
   // Get initData for server verification
   getInitData: () => {
-    return tg?.initData || '';
+    return getTg()?.initData || '';
   },
 
   // Show Main Button
   showMainButton: (text, callback) => {
+    const tg = getTg();
     if (!tg) return;
     tg.MainButton.setText(text);
     tg.MainButton.show();
@@ -63,12 +62,14 @@ export const telegramService = {
 
   // Hide Main Button
   hideMainButton: () => {
+    const tg = getTg();
     if (!tg) return;
     tg.MainButton.hide();
   },
 
   // Show Back Button
   showBackButton: (callback) => {
+    const tg = getTg();
     if (!tg) return;
     tg.BackButton.show();
     tg.BackButton.onClick(callback);
@@ -76,24 +77,28 @@ export const telegramService = {
 
   // Hide Back Button
   hideBackButton: () => {
+    const tg = getTg();
     if (!tg) return;
     tg.BackButton.hide();
   },
 
   // Send data to bot
   sendData: (data) => {
+    const tg = getTg();
     if (!tg) return;
     tg.sendData(JSON.stringify(data));
   },
 
   // Close the Mini App
   close: () => {
+    const tg = getTg();
     if (!tg) return;
     tg.close();
   },
 
   // Show alert
   showAlert: (message) => {
+    const tg = getTg();
     if (!tg) {
       window.alert(message);
       return;
@@ -103,6 +108,7 @@ export const telegramService = {
 
   // Show confirm
   showConfirm: (message) => {
+    const tg = getTg();
     if (!tg) {
       return Promise.resolve(window.confirm(message));
     }
@@ -113,6 +119,7 @@ export const telegramService = {
 
   // Haptic feedback
   hapticFeedback: (type = 'impact') => {
+    const tg = getTg();
     if (!tg?.HapticFeedback) return;
     
     switch (type) {
@@ -128,8 +135,8 @@ export const telegramService = {
     }
   },
 
-  // Get platform info
-  platform: tg?.platform || 'unknown',
-  colorScheme: tg?.colorScheme || 'dark',
-  themeParams: tg?.themeParams || {},
+  // Get platform info (read fresh each time)
+  get platform() { return getTg()?.platform || 'unknown'; },
+  get colorScheme() { return getTg()?.colorScheme || 'dark'; },
+  get themeParams() { return getTg()?.themeParams || {}; },
 };
