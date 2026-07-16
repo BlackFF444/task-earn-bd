@@ -1,18 +1,18 @@
-name: Build User App APK
+name: Build Admin App APK
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'user-app/**'
-      - '.github/workflows/build-user.yml'
+      - 'admin-app/**'
+      - '.github/workflows/build-admin.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: user-app
+        working-directory: admin-app
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +32,7 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Write Firebase/Google config from secrets
+      - name: Write Firebase config from secrets
         run: node write-config.js
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
@@ -46,12 +46,11 @@ jobs:
       - name: Build web
         run: npm run build
 
-      - name: Add Capacitor Android (if not present)
-        run: |
-          if [ ! -d "android" ]; then npx cap add android; fi
+      - name: Add Capacitor Android
+        run: npx @capacitor/cli add android
 
       - name: Sync
-        run: npx cap sync android
+        run: npx @capacitor/cli sync android
 
       - name: Build APK
         run: cd android && chmod +x gradlew && ./gradlew assembleDebug
@@ -59,5 +58,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: task-earn-bd-user-apk
-          path: user-app/android/app/build/outputs/apk/debug/app-debug.apk
+          name: task-earn-bd-admin-apk
+          path: admin-app/android/app/build/outputs/apk/debug/app-debug.apk
