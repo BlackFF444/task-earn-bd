@@ -1,18 +1,22 @@
-name: Build Admin App APK
+name: Build User App APK
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'admin-app/**'
-      - '.github/workflows/build-admin.yml'
+      - 'user-app/**'
+      - '.github/workflows/build-user.yml'
+
+env:
+  ANDROID_HOME: /opt/android-sdk
+  ANDROID_SDK_ROOT: /opt/android-sdk
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: admin-app
+        working-directory: user-app
     steps:
       - uses: actions/checkout@v4
 
@@ -26,13 +30,20 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install Android SDK
+        run: |
+          mkdir -p $ANDROID_HOME/cmdline-tools
+          curl -fsSL https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o /tmp/cmdtools.zip
+          unzip -q /tmp/cmdtools.zip -d $ANDROID_HOME/cmdline-tools
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          echo "PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH" >> $GITHUB_ENV
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Install deps
         run: npm install
 
-      - name: Write Firebase config from secrets
+      - name: Write Firebase/Google config from secrets
         run: node write-config.js
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
@@ -46,17 +57,17 @@ jobs:
       - name: Build web
         run: npm run build
 
-      - name: Add Capacitor Android
-        run: npx @capacitor/cli add android
+      - name: Sync Capacitor
+        run: ./node_modules/.bin/capacitor sync android
 
-      - name: Sync
-        run: npx @capacitor/cli sync android
+      - name: Write local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
 
       - name: Build APK
-        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: task-earn-bd-admin-apk
-          path: admin-app/android/app/build/outputs/apk/debug/app-debug.apk
+          name: task-earn-bd-user-apk
+          path: user-app/android/app/build/outputs/apk/debug/app-debug.apk
