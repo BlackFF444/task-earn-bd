@@ -1,0 +1,12 @@
+{
+  "name": "task-earn-bd-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot backup for Task Earn BD (referral deep links)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
