@@ -1,0 +1,8 @@
+{
+  "appId": "com.taskearnbd.admin",
+  "appName": "Task Earn BD Admin",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
