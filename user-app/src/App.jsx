@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Home, CheckSquare, Trophy, User, Clock, Zap, Moon, Sun, LogIn
+  Home, CheckSquare, Trophy, User, Clock, Zap, Moon, Sun
 } from 'lucide-react';
 import { authService, dbService, getVIPLevelName } from './services/firebase';
 import { AppProvider, useApp } from './context/AppContext';
@@ -15,7 +15,6 @@ function AppInner() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(false);
-  const [guestName, setGuestName] = useState('');
 
   const [tasks, setTasks] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
@@ -59,28 +58,12 @@ function AppInner() {
     }
   };
 
-  const handleGuestLogin = async () => {
-    setLoading(true);
-    try {
-      const name = guestName.trim() || 'Guest';
-      const loggedInUser = await authService.loginAsGuest(name);
-      setUser(loggedInUser);
-      await refreshAppState();
-      notify('Welcome to Task Earn BD!', 'success');
-    } catch (e) {
-      notify(e.message || 'Login failed.', 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleLogout = async () => {
     const confirmed = window.confirm('Are you sure you want to logout?');
     if (confirmed) {
       await authService.logout();
       setUser(null);
       setActiveTab('home');
-      setGuestName('');
     }
   };
 
@@ -169,38 +152,9 @@ function AppInner() {
                     )}
                   </button>
 
-                  <div className={`flex items-center gap-2 ${theme === 'dark' ? 'text-gray-600' : 'text-slate-300'}`}>
-                    <div className="flex-1 h-px bg-current opacity-30" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest">or</span>
-                    <div className="flex-1 h-px bg-current opacity-30" />
-                  </div>
-
-                  <input
-                    type="text"
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
-                    placeholder="Enter your name"
-                    className={`w-full py-2.5 px-4 rounded-[12px] text-[11px] font-bold outline-none transition-all ${
-                      theme === 'dark'
-                        ? 'bg-white/[0.05] border border-white/[0.08] text-white placeholder:text-gray-600 focus:border-violet-500/50'
-                        : 'bg-slate-100 border border-slate-200 text-slate-800 placeholder:text-slate-400 focus:border-violet-400'
-                    }`}
-                  />
-
-                  <button onClick={handleGuestLogin} disabled={loading} className={`w-full py-3 px-6 rounded-[14px] text-[11px] font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500`}>
-                    {loading ? (
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <LogIn className="w-4 h-4" />
-                        <span className="tracking-widest">START EARNING</span>
-                      </>
-                    )}
-                  </button>
-
                   <div className={`p-3 rounded-2xl border ${theme === 'dark' ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-slate-50 border-slate-200'}`}>
                     <p className={`text-[9px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
-                      Login with Google for cloud sync, or start instantly with a guest account. All earnings are saved locally.
+                      Sign in with your Google account to start earning BDT rewards.
                     </p>
                   </div>
                 </div>
