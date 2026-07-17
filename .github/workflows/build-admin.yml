@@ -41,7 +41,7 @@ jobs:
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Install deps
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Write Firebase config from secrets
         run: node write-config.js
@@ -58,7 +58,7 @@ jobs:
         run: npm run build
 
       - name: Sync Capacitor
-        run: ./node_modules/.bin/capacitor sync android
+        run: npx cap sync android
 
       - name: Write local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
