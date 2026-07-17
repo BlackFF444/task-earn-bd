@@ -75,8 +75,12 @@ function AppInner() {
       setUser(loggedInUser);
       await refreshAppState();
       notify('Welcome to Task Earn BD!', 'success');
-    } catch {
-      notify('Login failed. Try again.', 'error');
+    } catch (e) {
+      console.error('Telegram login error:', e);
+      notify(e.message || 'Login failed. Try again.', 'error');
+      if (!isInTelegram || (e.message && e.message.includes('user data'))) {
+        setIsInTelegram(false);
+      }
     } finally {
       setLoading(false);
     }
