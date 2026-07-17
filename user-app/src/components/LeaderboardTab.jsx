@@ -64,7 +64,7 @@ const MILESTONES = [
 ];
 
 function LeaderboardTab({ user, refreshAppState }) {
-  const { t, notify } = useApp();
+  const { notify } = useApp();
   const [subTab, setSubTab] = useState('leaderboard'); // leaderboard or milestones
   const [milestoneType, setMilestoneType] = useState('All'); // All, Achieve, Daily, Events
   const [leaderboardData, setLeaderboardData] = useState([]);
