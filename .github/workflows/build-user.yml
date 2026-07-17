@@ -58,7 +58,7 @@ jobs:
         run: npm run build
 
       - name: Sync Capacitor
-        run: ./node_modules/.bin/capacitor sync android
+        run: npx cap sync android
 
       - name: Write local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
