@@ -1,0 +1,98 @@
+﻿2026-07-16T21:13:18.4408697Z ##[group]Run cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+2026-07-16T21:13:18.4409237Z [36;1mcd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon[0m
+2026-07-16T21:13:18.4467068Z shell: /usr/bin/bash -e {0}
+2026-07-16T21:13:18.4467326Z env:
+2026-07-16T21:13:18.4467542Z   ANDROID_HOME: /opt/android-sdk
+2026-07-16T21:13:18.4467818Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-16T21:13:18.4468189Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-07-16T21:13:18.4468679Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-07-16T21:13:18.4470225Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-16T21:13:18.4472037Z ##[endgroup]
+2026-07-16T21:13:18.5680264Z Downloading https://services.gradle.org/distributions/gradle-8.11.1-all.zip
+2026-07-16T21:13:20.5836671Z .....................10%......................20%......................30%......................40%......................50%......................60%......................70%......................80%......................90%......................100%
+2026-07-16T21:13:24.0653316Z 
+2026-07-16T21:13:24.0654986Z Welcome to Gradle 8.11.1!
+2026-07-16T21:13:24.0655321Z 
+2026-07-16T21:13:24.0656114Z Here are the highlights of this release:
+2026-07-16T21:13:24.0658377Z  - Parallel load and store for Configuration Cache
+2026-07-16T21:13:24.0664901Z  - Java compilation errors at the end of the build output
+2026-07-16T21:13:24.0665860Z  - Consolidated report for warnings and deprecations
+2026-07-16T21:13:24.0666684Z 
+2026-07-16T21:13:24.0668529Z For more details see https://docs.gradle.org/8.11.1/release-notes.html
+2026-07-16T21:13:24.0669069Z 
+2026-07-16T21:13:24.1671255Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-07-16T21:13:25.5662660Z Daemon will be stopped at the end of the build 
+2026-07-16T21:13:50.8664565Z 
+2026-07-16T21:13:50.8686496Z > Configure project :app
+2026-07-16T21:13:50.8696736Z WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+2026-07-16T21:13:53.0649417Z 
+2026-07-16T21:13:53.0712490Z > Configure project :capacitor-cordova-android-plugins
+2026-07-16T21:13:53.0735523Z WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+2026-07-16T21:13:54.6646113Z Checking the license for package Android SDK Platform 35 in /opt/android-sdk/licenses
+2026-07-16T21:13:54.6647165Z License for package Android SDK Platform 35 accepted.
+2026-07-16T21:13:54.6647988Z Preparing "Install Android SDK Platform 35 (revision 2)".
+2026-07-16T21:13:57.3644590Z "Install Android SDK Platform 35 (revision 2)" ready.
+2026-07-16T21:13:57.3645370Z Installing Android SDK Platform 35 in /opt/android-sdk/platforms/android-35
+2026-07-16T21:13:57.3645920Z "Install Android SDK Platform 35 (revision 2)" complete.
+2026-07-16T21:13:57.5654173Z "Install Android SDK Platform 35 (revision 2)" finished.
+2026-07-16T21:14:00.3659245Z 
+2026-07-16T21:14:00.3678311Z > Task :app:preBuild UP-TO-DATE
+2026-07-16T21:14:00.3688275Z > Task :app:preDebugBuild UP-TO-DATE
+2026-07-16T21:14:00.3694734Z > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+2026-07-16T21:14:00.4645564Z > Task :app:javaPreCompileDebug
+2026-07-16T21:14:00.5645731Z > Task :capacitor-android:preBuild UP-TO-DATE
+2026-07-16T21:14:00.5646776Z > Task :capacitor-android:preDebugBuild UP-TO-DATE
+2026-07-16T21:14:00.5647963Z > Task :capacitor-cordova-android-plugins:preBuild UP-TO-DATE
+2026-07-16T21:14:00.5648911Z > Task :capacitor-cordova-android-plugins:preDebugBuild UP-TO-DATE
+2026-07-16T21:14:00.5650543Z > Task :capacitor-cordova-android-plugins:writeDebugAarMetadata
+2026-07-16T21:14:00.5651488Z > Task :capacitor-android:writeDebugAarMetadata
+2026-07-16T21:14:05.2702336Z > Task :app:generateDebugResValues
+2026-07-16T21:14:05.2731999Z > Task :capacitor-android:generateDebugResValues
+2026-07-16T21:14:05.2732796Z > Task :capacitor-android:generateDebugResources
+2026-07-16T21:14:05.2772050Z > Task :app:checkDebugAarMetadata
+2026-07-16T21:14:05.2773036Z > Task :capacitor-android:packageDebugResources
+2026-07-16T21:14:05.2774028Z > Task :capacitor-cordova-android-plugins:generateDebugResValues
+2026-07-16T21:14:05.3647233Z > Task :capacitor-cordova-android-plugins:generateDebugResources
+2026-07-16T21:14:05.3651551Z > Task :capacitor-cordova-android-plugins:packageDebugResources
+2026-07-16T21:14:05.3652689Z > Task :app:mapDebugSourceSetPaths
+2026-07-16T21:14:05.3653503Z > Task :app:generateDebugResources
+2026-07-16T21:14:06.0644672Z > Task :app:packageDebugResources
+2026-07-16T21:14:06.6645982Z > Task :app:createDebugCompatibleScreenManifests
+2026-07-16T21:14:06.6673448Z > Task :app:extractDeepLinksDebug
+2026-07-16T21:14:06.6702106Z > Task :capacitor-android:extractDeepLinksDebug
+2026-07-16T21:14:06.7646592Z > Task :capacitor-cordova-android-plugins:extractDeepLinksDebug
+2026-07-16T21:14:06.7672194Z > Task :app:parseDebugLocalResources
+2026-07-16T21:14:06.7672828Z > Task :capacitor-android:processDebugManifest
+2026-07-16T21:14:06.7673383Z > Task :app:mergeDebugResources
+2026-07-16T21:14:06.8645163Z > Task :capacitor-cordova-android-plugins:processDebugManifest
+2026-07-16T21:14:07.2672653Z > Task :capacitor-android:compileDebugLibraryResources
+2026-07-16T21:14:07.3652647Z > Task :app:processDebugMainManifest
+2026-07-16T21:14:07.6664252Z > Task :app:processDebugManifest
+2026-07-16T21:14:07.6692439Z > Task :capacitor-android:parseDebugLocalResources
+2026-07-16T21:14:07.6722421Z > Task :capacitor-cordova-android-plugins:compileDebugLibraryResources
+2026-07-16T21:14:07.6731907Z > Task :app:processDebugManifestForPackage
+2026-07-16T21:14:07.7652630Z > Task :capacitor-cordova-android-plugins:parseDebugLocalResources
+2026-07-16T21:14:07.7722238Z > Task :capacitor-android:javaPreCompileDebug
+2026-07-16T21:14:07.7723057Z > Task :capacitor-cordova-android-plugins:javaPreCompileDebug
+2026-07-16T21:14:07.7723725Z > Task :capacitor-android:generateDebugRFile
+2026-07-16T21:14:07.7724433Z > Task :capacitor-cordova-android-plugins:generateDebugRFile
+2026-07-16T21:14:07.7725036Z > Task :app:mergeDebugShaders
+2026-07-16T21:14:08.6660186Z > Task :app:processDebugResources
+2026-07-16T21:14:11.8652697Z > Task :capacitor-android:compileDebugJavaWithJavac FAILED
+2026-07-16T21:14:11.9672244Z [Incubating] Problems report is available at: file:///home/runner/work/task-earn-bd/task-earn-bd/user-app/android/build/reports/problems/problems-report.html
+2026-07-16T21:14:11.9673532Z 
+2026-07-16T21:14:11.9684003Z 36 actionable tasks: 36 executed
+2026-07-16T21:14:11.9701926Z FAILURE: Build failed with an exception.
+2026-07-16T21:14:11.9702316Z 
+2026-07-16T21:14:11.9702491Z * What went wrong:
+2026-07-16T21:14:11.9703301Z Execution failed for task ':capacitor-android:compileDebugJavaWithJavac'.
+2026-07-16T21:14:11.9754030Z > error: invalid source release: 21
+2026-07-16T21:14:11.9761565Z 
+2026-07-16T21:14:11.9761765Z * Try:
+2026-07-16T21:14:11.9762317Z > Run with --stacktrace option to get the stack trace.
+2026-07-16T21:14:11.9763101Z > Run with --info or --debug option to get more log output.
+2026-07-16T21:14:11.9763753Z > Run with --scan to get full insights.
+2026-07-16T21:14:11.9764340Z > Get more help at https://help.gradle.org.
+2026-07-16T21:14:11.9764687Z 
+2026-07-16T21:14:11.9764858Z BUILD FAILED in 53s
+2026-07-16T21:14:12.1212961Z ##[error]Process completed with exit code 1.

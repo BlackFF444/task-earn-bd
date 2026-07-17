@@ -1,0 +1,31 @@
+﻿2026-07-17T09:21:48.0884680Z ##[group]Run npm run build
+2026-07-17T09:21:48.0884967Z [36;1mnpm run build[0m
+2026-07-17T09:21:48.0948332Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:21:48.0948597Z env:
+2026-07-17T09:21:48.0948812Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:21:48.0949088Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:21:48.0949459Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:48.0949963Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:48.0951518Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:21:48.0952913Z ##[endgroup]
+2026-07-17T09:21:48.2114726Z 
+2026-07-17T09:21:48.2115661Z > task-earn-bd-user-app@1.0.0 build
+2026-07-17T09:21:48.2116150Z > vite build
+2026-07-17T09:21:48.2116344Z 
+2026-07-17T09:21:48.4396983Z [36mvite v8.1.4 [32mbuilding client environment for production...[36m[39m
+2026-07-17T09:21:48.4503690Z [2K
+2026-07-17T09:21:49.2473979Z transforming...✓ 2199 modules transformed.
+2026-07-17T09:21:49.2907523Z rendering chunks...
+2026-07-17T09:21:49.4198588Z computing gzip size...
+2026-07-17T09:21:49.4371129Z [33m[plugin builtin:vite-reporter] 
+2026-07-17T09:21:49.4371991Z dist/index.html                     0.80 kB │ gzip:   0.45 kB
+2026-07-17T09:21:49.4372808Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-07-17T09:21:49.4373632Z - Using dynamic import() to code-split the application
+2026-07-17T09:21:49.4374976Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+2026-07-17T09:21:49.4376784Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+2026-07-17T09:21:49.4378164Z dist/assets/index-Dx9Tl1Ns.css     74.33 kB │ gzip:  11.45 kB
+2026-07-17T09:21:49.4379336Z dist/assets/google-CKcr8zIc.js      1.14 kB │ gzip:   0.64 kB
+2026-07-17T09:21:49.4380196Z dist/assets/telegram-CSjVWAcv.js    1.66 kB │ gzip:   0.75 kB
+2026-07-17T09:21:49.4380770Z dist/assets/index-DTR6tFIr.js     663.18 kB │ gzip: 202.53 kB
+2026-07-17T09:21:49.4381356Z 
+2026-07-17T09:21:49.4381585Z [32m✓ built in 995ms[39m

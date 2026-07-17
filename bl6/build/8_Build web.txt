@@ -1,0 +1,33 @@
+﻿2026-07-17T09:35:45.5859967Z ##[group]Run npm run build
+2026-07-17T09:35:45.5860281Z [36;1mnpm run build[0m
+2026-07-17T09:35:45.5915650Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:35:45.5915903Z env:
+2026-07-17T09:35:45.5916107Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:35:45.5916383Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:35:45.5916771Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:35:45.5917287Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:35:45.5918907Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:35:45.5920668Z ##[endgroup]
+2026-07-17T09:35:45.7066093Z 
+2026-07-17T09:35:45.7067514Z > task-earn-bd-user-app@1.0.0 build
+2026-07-17T09:35:45.7068166Z > vite build
+2026-07-17T09:35:45.7068403Z 
+2026-07-17T09:35:45.9367769Z [36mvite v8.1.4 [32mbuilding client environment for production...[36m[39m
+2026-07-17T09:35:45.9513157Z [2K
+2026-07-17T09:35:46.6655119Z transforming...✓ 2203 modules transformed.
+2026-07-17T09:35:46.7082821Z rendering chunks...
+2026-07-17T09:35:46.8220862Z computing gzip size...
+2026-07-17T09:35:46.8326746Z dist/index.html                     0.80 kB │ gzip:   0.45 kB
+2026-07-17T09:35:46.8327996Z dist/assets/index-Dx9Tl1Ns.css     74.33 kB │ gzip:  11.45 kB
+2026-07-17T09:35:46.8328716Z dist/assets/google-4aDpKSaE.js      0.96 kB │ gzip:   0.59 kB
+2026-07-17T09:35:46.8329399Z dist/assets/telegram-CSjVWAcv.js    1.66 kB │ gzip:   0.75 kB
+2026-07-17T09:35:46.8330652Z dist/assets/web-CVLOriJS.js         2.22 kB │ gzip:   0.98 kB
+2026-07-17T09:35:46.8331788Z dist/assets/dist-CYdRQcHm.js        7.29 kB │ gzip:   2.94 kB
+2026-07-17T09:35:46.8332799Z dist/assets/index-_Wa1N7ks.js     663.35 kB │ gzip: 202.64 kB
+2026-07-17T09:35:46.8333209Z 
+2026-07-17T09:35:46.8333542Z [32m✓ built in 894ms[39m
+2026-07-17T09:35:46.8338603Z [33m[plugin builtin:vite-reporter] 
+2026-07-17T09:35:46.8339124Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-07-17T09:35:46.8340089Z - Using dynamic import() to code-split the application
+2026-07-17T09:35:46.8341254Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+2026-07-17T09:35:46.8342728Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m

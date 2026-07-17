@@ -1,0 +1,23 @@
+﻿2026-07-16T21:07:02.2988574Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-16T21:07:02.2994403Z ##[group]Run actions/setup-node@v4
+2026-07-16T21:07:02.2995531Z with:
+2026-07-16T21:07:02.2996543Z   node-version: 20
+2026-07-16T21:07:02.2997498Z   always-auth: false
+2026-07-16T21:07:02.2998489Z   check-latest: false
+2026-07-16T21:07:02.3008588Z   token: ***
+2026-07-16T21:07:02.3009474Z env:
+2026-07-16T21:07:02.3010348Z   ANDROID_HOME: /opt/android-sdk
+2026-07-16T21:07:02.3011534Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-16T21:07:02.3012693Z ##[endgroup]
+2026-07-16T21:07:02.4458042Z Attempting to download 20...
+2026-07-16T21:07:02.4567514Z (node:2265) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-16T21:07:02.4572610Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-16T21:07:02.7796858Z Acquiring 20.20.2 - x64 from https://github.com/actions/node-versions/releases/download/20.20.2-23521894959/node-20.20.2-linux-x64.tar.gz
+2026-07-16T21:07:03.1529530Z Extracting ...
+2026-07-16T21:07:03.1653373Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/12f8cc14-895f-4bbd-b82e-0cfb0d457cde -f /home/runner/work/_temp/7a6bf768-d19a-4ded-9742-fffb1f4177af
+2026-07-16T21:07:04.2117509Z Adding to the cache ...
+2026-07-16T21:07:06.0426425Z ##[group]Environment details
+2026-07-16T21:07:06.2695129Z node: v20.20.2
+2026-07-16T21:07:06.2695897Z npm: 10.8.2
+2026-07-16T21:07:06.2696609Z yarn: 1.22.22
+2026-07-16T21:07:06.2697609Z ##[endgroup]

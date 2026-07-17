@@ -1,0 +1,30 @@
+﻿2026-07-17T09:37:35.5740322Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-17T09:37:35.5741818Z ##[group]Run actions/upload-artifact@v4
+2026-07-17T09:37:35.5742081Z with:
+2026-07-17T09:37:35.5742276Z   name: task-earn-bd-user-apk
+2026-07-17T09:37:35.5742605Z   path: user-app/android/app/build/outputs/apk/debug/app-debug.apk
+2026-07-17T09:37:35.5742964Z   if-no-files-found: warn
+2026-07-17T09:37:35.5743189Z   compression-level: 6
+2026-07-17T09:37:35.5743400Z   overwrite: false
+2026-07-17T09:37:35.5743609Z   include-hidden-files: false
+2026-07-17T09:37:35.5743828Z env:
+2026-07-17T09:37:35.5744019Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:37:35.5744274Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:37:35.5744629Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:37:35.5745145Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:37:35.5746746Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:37:35.5748205Z ##[endgroup]
+2026-07-17T09:37:35.7335005Z (node:2985) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-17T09:37:35.7336538Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-17T09:37:35.7380577Z With the provided path, there will be 1 file uploaded
+2026-07-17T09:37:35.7385726Z Artifact name is valid!
+2026-07-17T09:37:35.7399944Z Root directory input is valid!
+2026-07-17T09:37:36.0770121Z Beginning upload of artifact content to blob storage
+2026-07-17T09:37:36.2471739Z (node:2985) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-07-17T09:37:37.0899980Z Uploaded bytes 4333032
+2026-07-17T09:37:37.1671070Z Finished uploading artifact content to blob storage!
+2026-07-17T09:37:37.1672521Z SHA256 digest of uploaded artifact zip is d32dd7b26dff692ab7fa18ffc45c187cf52a72badd21b175f9e969a0cc6b47dd
+2026-07-17T09:37:37.1674784Z Finalizing artifact upload
+2026-07-17T09:37:37.3759023Z Artifact task-earn-bd-user-apk.zip successfully finalized. Artifact ID 8402910250
+2026-07-17T09:37:37.3761158Z Artifact task-earn-bd-user-apk has been successfully uploaded! Final size is 4333032 bytes. Artifact ID is 8402910250
+2026-07-17T09:37:37.3768247Z Artifact download URL: https://github.com/BlackFF444/task-earn-bd/actions/runs/29570497078/artifacts/8402910250

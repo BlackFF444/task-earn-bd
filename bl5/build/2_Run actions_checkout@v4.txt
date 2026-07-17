@@ -1,0 +1,76 @@
+﻿2026-07-17T09:31:02.4951679Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-17T09:31:02.4961935Z ##[group]Run actions/checkout@v4
+2026-07-17T09:31:02.4962814Z with:
+2026-07-17T09:31:02.4963345Z   repository: BlackFF444/task-earn-bd
+2026-07-17T09:31:02.4968538Z   token: ***
+2026-07-17T09:31:02.4969056Z   ssh-strict: true
+2026-07-17T09:31:02.4969585Z   ssh-user: git
+2026-07-17T09:31:02.4970102Z   persist-credentials: true
+2026-07-17T09:31:02.4970669Z   clean: true
+2026-07-17T09:31:02.4971171Z   sparse-checkout-cone-mode: true
+2026-07-17T09:31:02.4971789Z   fetch-depth: 1
+2026-07-17T09:31:02.4972320Z   fetch-tags: false
+2026-07-17T09:31:02.4972832Z   show-progress: true
+2026-07-17T09:31:02.4973348Z   lfs: false
+2026-07-17T09:31:02.4973838Z   submodules: false
+2026-07-17T09:31:02.4974396Z   set-safe-directory: true
+2026-07-17T09:31:02.4975218Z env:
+2026-07-17T09:31:02.4975715Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:31:02.4976512Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:31:02.4977160Z ##[endgroup]
+2026-07-17T09:31:02.6028925Z Syncing repository: BlackFF444/task-earn-bd
+2026-07-17T09:31:02.6032178Z ##[group]Getting Git version info
+2026-07-17T09:31:02.6033707Z Working directory is '/home/runner/work/task-earn-bd/task-earn-bd'
+2026-07-17T09:31:02.6035830Z [command]/usr/bin/git version
+2026-07-17T09:31:02.6080393Z git version 2.54.0
+2026-07-17T09:31:02.6103599Z ##[endgroup]
+2026-07-17T09:31:02.6121226Z Temporarily overriding HOME='/home/runner/work/_temp/23c70fe5-a2a4-4a4c-b0a8-1e6c3965415c' before making global git config changes
+2026-07-17T09:31:02.6124794Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-17T09:31:02.6128114Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/task-earn-bd/task-earn-bd
+2026-07-17T09:31:02.6195977Z Deleting the contents of '/home/runner/work/task-earn-bd/task-earn-bd'
+2026-07-17T09:31:02.6198915Z ##[group]Initializing the repository
+2026-07-17T09:31:02.6202954Z [command]/usr/bin/git init /home/runner/work/task-earn-bd/task-earn-bd
+2026-07-17T09:31:02.6328198Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-17T09:31:02.6330424Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-17T09:31:02.6332264Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-17T09:31:02.6335840Z hint: call:
+2026-07-17T09:31:02.6336963Z hint:
+2026-07-17T09:31:02.6338074Z hint: 	git config --global init.defaultBranch <name>
+2026-07-17T09:31:02.6339438Z hint:
+2026-07-17T09:31:02.6340705Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-17T09:31:02.6342818Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-17T09:31:02.6344523Z hint:
+2026-07-17T09:31:02.6345502Z hint: 	git branch -m <name>
+2026-07-17T09:31:02.6347417Z hint:
+2026-07-17T09:31:02.6349520Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-17T09:31:02.6352325Z Initialized empty Git repository in /home/runner/work/task-earn-bd/task-earn-bd/.git/
+2026-07-17T09:31:02.6356492Z [command]/usr/bin/git remote add origin https://github.com/BlackFF444/task-earn-bd
+2026-07-17T09:31:02.6400676Z ##[endgroup]
+2026-07-17T09:31:02.6402065Z ##[group]Disabling automatic garbage collection
+2026-07-17T09:31:02.6404780Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-17T09:31:02.6443185Z ##[endgroup]
+2026-07-17T09:31:02.6444798Z ##[group]Setting up auth
+2026-07-17T09:31:02.6452151Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-17T09:31:02.6493292Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-17T09:31:02.6885622Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-17T09:31:02.6928067Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-17T09:31:02.7166737Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-17T09:31:02.7205555Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-17T09:31:02.7467522Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-17T09:31:02.7509334Z ##[endgroup]
+2026-07-17T09:31:02.7511037Z ##[group]Fetching the repository
+2026-07-17T09:31:02.7521857Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +23b93398dd0fe1964e5784039d64606a0962623c:refs/remotes/origin/main
+2026-07-17T09:31:03.2241838Z From https://github.com/BlackFF444/task-earn-bd
+2026-07-17T09:31:03.2244450Z  * [new ref]         23b93398dd0fe1964e5784039d64606a0962623c -> origin/main
+2026-07-17T09:31:03.2389185Z ##[endgroup]
+2026-07-17T09:31:03.2390680Z ##[group]Determining the checkout info
+2026-07-17T09:31:03.2392049Z ##[endgroup]
+2026-07-17T09:31:03.2398986Z [command]/usr/bin/git sparse-checkout disable
+2026-07-17T09:31:03.2457065Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-17T09:31:03.2493348Z ##[group]Checking out the ref
+2026-07-17T09:31:03.2499051Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-07-17T09:31:03.2848743Z Switched to a new branch 'main'
+2026-07-17T09:31:03.2851500Z branch 'main' set up to track 'origin/main'.
+2026-07-17T09:31:03.2862633Z ##[endgroup]
+2026-07-17T09:31:03.2911927Z [command]/usr/bin/git log -1 --format=%H
+2026-07-17T09:31:03.2942492Z 23b93398dd0fe1964e5784039d64606a0962623c

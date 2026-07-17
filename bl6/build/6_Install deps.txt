@@ -1,0 +1,17 @@
+﻿2026-07-17T09:35:38.8278331Z ##[group]Run npm install --legacy-peer-deps
+2026-07-17T09:35:38.8279003Z [36;1mnpm install --legacy-peer-deps[0m
+2026-07-17T09:35:38.8341807Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:35:38.8342087Z env:
+2026-07-17T09:35:38.8342297Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:35:38.8342574Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:35:38.8342951Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:35:38.8343472Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:35:38.8345107Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:35:38.8346616Z ##[endgroup]
+2026-07-17T09:35:45.5133847Z 
+2026-07-17T09:35:45.5134632Z added 224 packages, and audited 225 packages in 7s
+2026-07-17T09:35:45.5135316Z 
+2026-07-17T09:35:45.5135984Z 27 packages are looking for funding
+2026-07-17T09:35:45.5136375Z   run `npm fund` for details
+2026-07-17T09:35:45.5145997Z 
+2026-07-17T09:35:45.5146265Z found 0 vulnerabilities

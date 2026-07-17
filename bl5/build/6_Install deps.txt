@@ -1,0 +1,41 @@
+﻿2026-07-17T09:31:19.7681390Z ##[group]Run npm install
+2026-07-17T09:31:19.7681703Z [36;1mnpm install[0m
+2026-07-17T09:31:19.7740068Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:31:19.7740334Z env:
+2026-07-17T09:31:19.7740565Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:31:19.7740845Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:31:19.7741224Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:31:19.7741770Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:31:19.7743395Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:31:19.7744876Z ##[endgroup]
+2026-07-17T09:31:20.4211988Z npm error code ERESOLVE
+2026-07-17T09:31:20.4212743Z npm error ERESOLVE could not resolve
+2026-07-17T09:31:20.4213306Z npm error
+2026-07-17T09:31:20.4214133Z npm error While resolving: @codetrix-studio/capacitor-google-auth@3.4.0-rc.4
+2026-07-17T09:31:20.4215416Z npm error Found: @capacitor/core@7.6.8
+2026-07-17T09:31:20.4216044Z npm error node_modules/@capacitor/core
+2026-07-17T09:31:20.4217075Z npm error   @capacitor/core@"^7.4.0" from the root project
+2026-07-17T09:31:20.4218001Z npm error   peer @capacitor/core@"^7.6.0" from @capacitor/android@7.6.8
+2026-07-17T09:31:20.4218818Z npm error   node_modules/@capacitor/android
+2026-07-17T09:31:20.4219619Z npm error     @capacitor/android@"^7.4.0" from the root project
+2026-07-17T09:31:20.4220241Z npm error
+2026-07-17T09:31:20.4220746Z npm error Could not resolve dependency:
+2026-07-17T09:31:20.4221773Z npm error peer @capacitor/core@"^6.0.0" from @codetrix-studio/capacitor-google-auth@3.4.0-rc.4
+2026-07-17T09:31:20.4222897Z npm error node_modules/@codetrix-studio/capacitor-google-auth
+2026-07-17T09:31:20.4224053Z npm error   @codetrix-studio/capacitor-google-auth@"^3.4.0-rc.4" from the root project
+2026-07-17T09:31:20.4224857Z npm error
+2026-07-17T09:31:20.4225530Z npm error Conflicting peer dependency: @capacitor/core@6.2.1
+2026-07-17T09:31:20.4226546Z npm error node_modules/@capacitor/core
+2026-07-17T09:31:20.4227610Z npm error   peer @capacitor/core@"^6.0.0" from @codetrix-studio/capacitor-google-auth@3.4.0-rc.4
+2026-07-17T09:31:20.4228746Z npm error   node_modules/@codetrix-studio/capacitor-google-auth
+2026-07-17T09:31:20.4229907Z npm error     @codetrix-studio/capacitor-google-auth@"^3.4.0-rc.4" from the root project
+2026-07-17T09:31:20.4230731Z npm error
+2026-07-17T09:31:20.4231364Z npm error Fix the upstream dependency conflict, or retry
+2026-07-17T09:31:20.4232222Z npm error this command with --force or --legacy-peer-deps
+2026-07-17T09:31:20.4233262Z npm error to accept an incorrect (and potentially broken) dependency resolution.
+2026-07-17T09:31:20.4233894Z npm error
+2026-07-17T09:31:20.4234097Z npm error
+2026-07-17T09:31:20.4234352Z npm error For a full report see:
+2026-07-17T09:31:20.4235410Z npm error /home/runner/.npm/_logs/2026-07-17T09_31_19_841Z-eresolve-report.txt
+2026-07-17T09:31:20.4237063Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-07-17T09_31_19_841Z-debug-0.log
+2026-07-17T09:31:20.4311199Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,16 @@
+﻿2026-07-17T09:21:49.4678530Z ##[group]Run ./node_modules/.bin/capacitor sync android
+2026-07-17T09:21:49.4678945Z [36;1m./node_modules/.bin/capacitor sync android[0m
+2026-07-17T09:21:49.4743833Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:21:49.4744096Z env:
+2026-07-17T09:21:49.4744307Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:21:49.4744577Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:21:49.4744948Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:49.4745725Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:49.4747299Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:21:49.4748748Z ##[endgroup]
+2026-07-17T09:21:49.7088764Z ✔ Copying web assets from dist to android/app/src/main/assets/public in 5.65ms
+2026-07-17T09:21:49.7098402Z ✔ Creating capacitor.config.json in android/app/src/main/assets in 803.80μs
+2026-07-17T09:21:49.7139768Z ✔ copy android in 17.31ms
+2026-07-17T09:21:49.7230553Z ✔ Updating Android plugins in 2.25ms
+2026-07-17T09:21:49.7413933Z ✔ update android in 24.52ms
+2026-07-17T09:21:49.7453005Z [info] Sync finished in 0.06s

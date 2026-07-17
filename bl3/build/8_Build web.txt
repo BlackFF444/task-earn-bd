@@ -1,0 +1,32 @@
+﻿2026-07-16T21:13:16.7452791Z ##[group]Run npm run build
+2026-07-16T21:13:16.7453077Z [36;1mnpm run build[0m
+2026-07-16T21:13:16.7517347Z shell: /usr/bin/bash -e {0}
+2026-07-16T21:13:16.7517613Z env:
+2026-07-16T21:13:16.7517827Z   ANDROID_HOME: /opt/android-sdk
+2026-07-16T21:13:16.7518098Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-16T21:13:16.7518469Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-07-16T21:13:16.7518983Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-07-16T21:13:16.7520512Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-16T21:13:16.7522058Z ##[endgroup]
+2026-07-16T21:13:16.8689612Z 
+2026-07-16T21:13:16.8690326Z > task-earn-bd-user-app@1.0.0 build
+2026-07-16T21:13:16.8690873Z > vite build
+2026-07-16T21:13:16.8691082Z 
+2026-07-16T21:13:17.1136889Z [36mvite v8.1.4 [32mbuilding client environment for production...[36m[39m
+2026-07-16T21:13:17.1312559Z [2K
+2026-07-16T21:13:17.8886722Z transforming...✓ 2200 modules transformed.
+2026-07-16T21:13:17.9317767Z rendering chunks...
+2026-07-16T21:13:18.0582414Z computing gzip size...
+2026-07-16T21:13:18.0709441Z dist/index.html                   0.81 kB │ gzip:   0.45 kB
+2026-07-16T21:13:18.0710452Z dist/assets/index-DM-G26Uc.css   72.62 kB │ gzip:  11.31 kB
+2026-07-16T21:13:18.0711538Z dist/assets/google-DLQopoqS.js    1.12 kB │ gzip:   0.63 kB
+2026-07-16T21:13:18.0712444Z dist/assets/index-DHN4XOpA.js   693.24 kB │ gzip: 208.84 kB
+2026-07-16T21:13:18.0712848Z 
+2026-07-16T21:13:18.0718282Z [33m[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0msrc/services/telegram.js is dynamically imported by src/services/firebase.js but also statically imported by src/App.jsx, src/components/AdminTab.jsx, dynamic import will not move module into another chunk.
+2026-07-16T21:13:18.0720096Z [39m
+2026-07-16T21:13:18.0720702Z [33m[plugin builtin:vite-reporter] 
+2026-07-16T21:13:18.0721659Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-07-16T21:13:18.0722509Z - Using dynamic import() to code-split the application
+2026-07-16T21:13:18.0724309Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+2026-07-16T21:13:18.0725922Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+2026-07-16T21:13:18.0726767Z [32m✓ built in 957ms[39m

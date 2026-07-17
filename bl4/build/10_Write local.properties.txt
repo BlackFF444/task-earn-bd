@@ -1,0 +1,10 @@
+﻿2026-07-17T09:21:49.7618192Z ##[group]Run echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+2026-07-17T09:21:49.7618960Z [36;1mecho "sdk.dir=$ANDROID_HOME" > android/local.properties[0m
+2026-07-17T09:21:49.7688191Z shell: /usr/bin/bash -e {0}
+2026-07-17T09:21:49.7688470Z env:
+2026-07-17T09:21:49.7688692Z   ANDROID_HOME: /opt/android-sdk
+2026-07-17T09:21:49.7688970Z   ANDROID_SDK_ROOT: /opt/android-sdk
+2026-07-17T09:21:49.7689373Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:49.7689875Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-17T09:21:49.7691416Z   PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64/bin:/opt/hostedtoolcache/node/20.20.2/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-07-17T09:21:49.7693764Z ##[endgroup]
