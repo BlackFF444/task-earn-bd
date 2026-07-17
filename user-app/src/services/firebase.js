@@ -193,6 +193,27 @@ export const authService = {
     return currentUser;
   },
 
+  loginAsGuest: async (name) => {
+    const guestName = (name || 'Guest').trim();
+    const guestId = 'guest-' + Date.now() + '-' + Math.floor(1000 + Math.random() * 9000);
+    const user = {
+      id: guestId, name: guestName,
+      photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${guestName.replace(/\s/g, '')}`,
+      balance: 0.00, referralCode: generateReferralCode(guestName), referralCount: 0,
+      streakCount: 0, lastCheckIn: null, completedTasks: [],
+      telegramUsername: '', isPremium: false, referredBy: null, loginMethod: 'guest',
+    };
+    if (USE_CLOUD) {
+      await firestoreUsers.set(user.id, user);
+    } else {
+      lsUsers.push(user);
+      saveToStorage(STORAGE_KEYS.USERS, lsUsers);
+    }
+    currentUser = user;
+    saveToStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
+    return currentUser;
+  },
+
   logout: async () => {
     currentUser = null;
     saveToStorage(STORAGE_KEYS.CURRENT_USER, null);

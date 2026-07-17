@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Home, CheckSquare, Trophy, User, Settings, Clock, Zap, Moon, Sun
+  Home, CheckSquare, Trophy, User, Settings, Clock, Zap, Moon, Sun, LogIn
 } from 'lucide-react';
 import { authService, dbService, getVIPLevelName } from './services/firebase';
-import { telegramService } from './services/telegram';
 import { AppProvider, useApp } from './context/AppContext';
 import HomeTab from './components/HomeTab';
 import TasksTab from './components/TasksTab';
@@ -17,33 +16,18 @@ function AppInner() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(false);
+  const [guestName, setGuestName] = useState('');
 
   const [tasks, setTasks] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
   const [pendingTaskClaims, setPendingTaskClaims] = useState([]);
   const [globalStats, setGlobalStats] = useState({ totalBDT: 0, totalUsers: 0, completedTasks: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isInTelegram, setIsInTelegram] = useState(() => telegramService.isTelegramWebApp());
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
-  // Retry Telegram SDK detection (loads async)
-  useEffect(() => {
-    if (isInTelegram) return;
-    let retries = 0;
-    const check = setInterval(() => {
-      if (telegramService.isTelegramWebApp()) {
-        setIsInTelegram(true);
-        clearInterval(check);
-      }
-      retries++;
-      if (retries > 20) clearInterval(check); // stop after 2s
-    }, 100);
-    return () => clearInterval(check);
-  }, [isInTelegram]);
 
   const fetchData = async () => {
     try {
@@ -68,24 +52,6 @@ function AppInner() {
 
   const refreshAppState = async () => await fetchData();
 
-  const handleLogin = async () => {
-    setLoading(true);
-    try {
-      const loggedInUser = await authService.loginWithTelegram();
-      setUser(loggedInUser);
-      await refreshAppState();
-      notify('Welcome to Task Earn BD!', 'success');
-    } catch (e) {
-      console.error('Telegram login error:', e);
-      notify(e.message || 'Login failed. Try again.', 'error');
-      if (!isInTelegram || (e.message && e.message.includes('user data'))) {
-        setIsInTelegram(false);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
@@ -94,20 +60,34 @@ function AppInner() {
       await refreshAppState();
       notify('Welcome to Task Earn BD!', 'success');
     } catch (e) {
-      notify(e.message || 'Google login failed.', 'error');
+      notify(e.message || 'Google login failed. Make sure GOOGLE_CLIENT_ID is configured.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setLoading(true);
+    try {
+      const name = guestName.trim() || 'Guest';
+      const loggedInUser = await authService.loginAsGuest(name);
+      setUser(loggedInUser);
+      await refreshAppState();
+      notify('Welcome to Task Earn BD!', 'success');
+    } catch (e) {
+      notify(e.message || 'Login failed.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   const handleLogout = async () => {
-    const confirmed = telegramService.isTelegramWebApp()
-      ? await telegramService.showConfirm('Are you sure you want to logout?')
-      : window.confirm('Are you sure you want to logout?');
+    const confirmed = window.confirm('Are you sure you want to logout?');
     if (confirmed) {
       await authService.logout();
       setUser(null);
       setActiveTab('home');
+      setGuestName('');
     }
   };
 
@@ -180,45 +160,60 @@ function AppInner() {
                 <h2 className={`text-xl font-black mb-2 tracking-tight ${theme === 'dark' ? 'gradient-text' : 'text-slate-800'}`}>
                   TASK EARN BD
                 </h2>
-                <p className={`text-[11px] mb-4 max-w-[260px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
+                <p className={`text-[11px] mb-6 max-w-[260px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
                   Complete simple micro-social tasks, claim daily rewards & withdraw BDT instantly.
                 </p>
 
-                {isInTelegram ? (
-                  <button onClick={handleLogin} disabled={loading} className="w-full max-w-[260px] py-3 px-6 rounded-[14px] glass-button-premium text-[11px] font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all">
+                <div className="flex flex-col gap-3 w-full max-w-[260px]">
+                  <button onClick={handleGoogleLogin} disabled={loading} className="w-full py-3 px-6 rounded-[14px] bg-white text-[11px] font-black text-gray-800 flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg hover:shadow-xl">
+                    {loading ? (
+                      <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-800 rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                        <span className="tracking-widest">CONTINUE WITH GOOGLE</span>
+                      </>
+                    )}
+                  </button>
+
+                  <div className={`flex items-center gap-2 ${theme === 'dark' ? 'text-gray-600' : 'text-slate-300'}`}>
+                    <div className="flex-1 h-px bg-current opacity-30" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest">or</span>
+                    <div className="flex-1 h-px bg-current opacity-30" />
+                  </div>
+
+                  <input
+                    type="text"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    placeholder="Enter your name"
+                    className={`w-full py-2.5 px-4 rounded-[12px] text-[11px] font-bold outline-none transition-all ${
+                      theme === 'dark'
+                        ? 'bg-white/[0.05] border border-white/[0.08] text-white placeholder:text-gray-600 focus:border-violet-500/50'
+                        : 'bg-slate-100 border border-slate-200 text-slate-800 placeholder:text-slate-400 focus:border-violet-400'
+                    }`}
+                  />
+
+                  <button onClick={handleGuestLogin} disabled={loading} className={`w-full py-3 px-6 rounded-[14px] text-[11px] font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg ${
+                    theme === 'dark'
+                      ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500'
+                      : 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500'
+                  }`}>
                     {loading ? (
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
                       <>
-                        <Zap className="w-4 h-4" />
+                        <LogIn className="w-4 h-4" />
                         <span className="tracking-widest">START EARNING</span>
                       </>
                     )}
                   </button>
-                ) : (
-                  <div className="flex flex-col gap-2.5 w-full max-w-[260px]">
-                    <button onClick={handleGoogleLogin} disabled={loading} className="w-full py-3 px-6 rounded-[14px] bg-white text-[11px] font-black text-gray-800 flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg">
-                      {loading ? (
-                        <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-800 rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <svg className="w-4 h-4" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                          <span className="tracking-widest">CONTINUE WITH GOOGLE</span>
-                        </>
-                      )}
-                    </button>
-                    <div className={`p-3 rounded-2xl border ${theme === 'dark' ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-slate-50 border-slate-200'}`}>
-                      <p className={`text-[9px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
-                        Or open in Telegram bot for auto-login. Use Google to login from the Android app directly.
-                      </p>
-                    </div>
-                  </div>
-                )}
 
-                <div className={`absolute bottom-5 left-5 right-5 p-2.5 rounded-xl border ${theme === 'dark' ? 'bg-white/[0.02] border-white/[0.04]' : 'bg-slate-50/80 border-slate-200/60'}`}>
-                  <p className={`text-[8px] ${theme === 'dark' ? 'text-gray-600' : 'text-slate-400'}`}>
-                    {isInTelegram ? 'Auto-login with your Telegram account' : 'Telegram Mini App - Open in bot to start'}
-                  </p>
+                  <div className={`p-3 rounded-2xl border ${theme === 'dark' ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-slate-50 border-slate-200'}`}>
+                    <p className={`text-[9px] leading-relaxed ${theme === 'dark' ? 'text-gray-500' : 'text-slate-400'}`}>
+                      Login with Google for cloud sync, or start instantly with a guest account. All earnings are saved locally.
+                    </p>
+                  </div>
                 </div>
               </div>
             ) : (

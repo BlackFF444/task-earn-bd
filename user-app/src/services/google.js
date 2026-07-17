@@ -1,12 +1,8 @@
 // Google OAuth Login (for Android / Web standalone app)
-// Uses Google Identity Services (GIS) loaded via script tag in index.html
-
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_WEB_CLIENT_ID.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_WEB_CLIENT_ID.apps.googleusercontent.com";
 
 export const googleService = {
   clientId: GOOGLE_CLIENT_ID,
-
-  // Load Google Identity Services script
   loadScript: () => {
     return new Promise((resolve, reject) => {
       if (window.google && window.google.accounts && window.google.accounts.oauth2) {
@@ -29,7 +25,6 @@ export const googleService = {
     });
   },
 
-  // Prompt Google One Tap / consent, return user info
   signIn: () => {
     return new Promise(async (resolve, reject) => {
       try {
