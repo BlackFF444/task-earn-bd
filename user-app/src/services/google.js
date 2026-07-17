@@ -1,39 +1,69 @@
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-
 const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_WEB_CLIENT_ID.apps.googleusercontent.com";
 
 export const googleService = {
   clientId: GOOGLE_CLIENT_ID,
 
-  initialize: () => {
-    try {
-      GoogleAuth.initialize({
-        clientId: GOOGLE_CLIENT_ID,
-        scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
-      });
-    } catch (e) {
-      console.warn('GoogleAuth initialize warning:', e);
-    }
+  waitForGsi: () => {
+    return new Promise((resolve) => {
+      if (window.google && window.google.accounts) {
+        resolve(true);
+        return;
+      }
+      let attempts = 0;
+      const check = setInterval(() => {
+        if (window.google && window.google.accounts) {
+          clearInterval(check);
+          resolve(true);
+        }
+        attempts++;
+        if (attempts > 50) {
+          clearInterval(check);
+          resolve(false);
+        }
+      }, 200);
+    });
   },
 
   signIn: async () => {
-    try {
-      googleService.initialize();
-      const result = await GoogleAuth.signIn();
-      const user = result.user;
-      if (!user || !user.id) throw new Error('Google login failed - no user data');
-      return {
-        id: user.id,
-        email: user.email,
-        name: user.name || user.email,
-        firstName: user.givenName || user.name || '',
-        lastName: user.familyName || '',
-        photoURL: user.imageUrl || null,
-        username: user.email ? user.email.split('@')[0] : '',
-      };
-    } catch (e) {
-      throw new Error(e.message || 'Google login failed');
-    }
+    const ready = await googleService.waitForGsi();
+    if (!ready) throw new Error('Google services not available. Check internet connection.');
+
+    return new Promise((resolve, reject) => {
+      try {
+        const client = window.google.accounts.oauth2.initTokenClient({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'email profile openid',
+          callback: async (response) => {
+            if (response.error) {
+              reject(new Error(response.error));
+              return;
+            }
+            try {
+              const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${response.access_token}` },
+              });
+              const profile = await res.json();
+              resolve({
+                id: profile.sub,
+                email: profile.email,
+                name: profile.name,
+                firstName: profile.given_name || profile.name,
+                lastName: profile.family_name || '',
+                photoURL: profile.picture,
+                username: profile.email ? profile.email.split('@')[0] : '',
+              });
+            } catch (e) {
+              reject(new Error('Failed to get user profile'));
+            }
+          },
+          error_callback: (err) => {
+            reject(new Error(err.type || 'Google authentication failed'));
+          },
+        });
+        client.requestAccessToken();
+      } catch (e) {
+        reject(e);
+      }
+    });
   },
 };
