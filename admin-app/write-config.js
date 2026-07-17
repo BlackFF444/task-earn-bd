@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// --- Firebase config ---
 const firebaseConfig = `import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -25,9 +26,30 @@ export const googleProvider = new GoogleAuthProvider();
 export const FIREBASE_ENABLED = firebaseConfig.apiKey !== "YOUR_FIREBASE_API_KEY";
 `;
 
-const outDir = path.join(__dirname, 'src', 'services');
-fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, 'firebase.js'), firebaseConfig);
+const servicesDir = path.join(__dirname, 'src', 'services');
+fs.mkdirSync(servicesDir, { recursive: true });
+fs.writeFileSync(path.join(servicesDir, 'firebase.js'), firebaseConfig);
 
-const enabled = process.env.FIREBASE_API_KEY && process.env.FIREBASE_API_KEY !== 'YOUR_FIREBASE_API_KEY';
-console.log('Config written. FIREBASE_ENABLED =', enabled);
+// --- Capacitor config ---
+const googleClientId = process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID';
+
+const capacitorConfig = {
+  appId: "com.taskearnbd.admin",
+  appName: "Task Earn BD Admin",
+  webDir: "dist",
+  server: { androidScheme: "https" },
+  plugins: {
+    GoogleAuth: {
+      scopes: ["profile", "email"],
+      serverClientId: googleClientId,
+      forceCodeForRefreshToken: true
+    }
+  }
+};
+
+fs.writeFileSync(path.join(__dirname, 'capacitor.config.json'), JSON.stringify(capacitorConfig, null, 2) + '\n');
+
+// --- Summary ---
+const firebaseEnabled = process.env.FIREBASE_API_KEY && process.env.FIREBASE_API_KEY !== 'YOUR_FIREBASE_API_KEY';
+const googleConfigured = googleClientId !== 'YOUR_GOOGLE_CLIENT_ID';
+console.log(`Config written. FIREBASE_ENABLED=${firebaseEnabled}, GOOGLE_AUTH=${googleConfigured}, serverClientId=${googleClientId.substring(0, 20)}...`);

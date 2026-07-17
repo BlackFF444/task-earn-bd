@@ -7,8 +7,11 @@
   },
   "plugins": {
     "GoogleAuth": {
-      "scopes": ["profile", "email"],
-      "serverClientId": "GOOGLE_CLIENT_ID_PLACEHOLDER",
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "YOUR_GOOGLE_CLIENT_ID",
       "forceCodeForRefreshToken": true
     }
   }
