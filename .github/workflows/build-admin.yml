@@ -63,12 +63,12 @@ jobs:
       - name: Write local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
 
-      - name: Get SHA-1 Fingerprint
-        run: cd android && chmod +x gradlew && ./gradlew signingReport --no-daemon
-        continue-on-error: true
-
       - name: Build APK
         run: cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+
+      - name: Get SHA-1 Fingerprint
+        run: cd android && ./gradlew signingReport --no-daemon
+        continue-on-error: true
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
