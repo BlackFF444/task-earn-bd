@@ -42,11 +42,13 @@ function ProfileTab({ user, refreshAppState, onLogout, withdrawals }) {
 
   const handleShareLink = () => {
     const link = `https://t.me/taskearnbd69_bot?start=${user.referralCode}`;
-    const tg = window.Telegram?.WebApp;
-    if (tg?.openTelegramLink) {
-      tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`);
+    if (navigator.share) {
+      navigator.share({ title: 'Task Earn BD', text: 'Join Task Earn BD and earn BDT!', url: link }).catch(() => {});
     } else {
-      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join Task Earn BD and earn BDT!')}`, '_blank');
+      navigator.clipboard.writeText(link).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(() => {});
     }
   };
 

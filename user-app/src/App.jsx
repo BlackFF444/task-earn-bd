@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Home, CheckSquare, Trophy, User, Settings, Clock, Zap, Moon, Sun, LogIn
+  Home, CheckSquare, Trophy, User, Clock, Zap, Moon, Sun, LogIn
 } from 'lucide-react';
 import { authService, dbService, getVIPLevelName } from './services/firebase';
 import { AppProvider, useApp } from './context/AppContext';
@@ -8,7 +8,6 @@ import HomeTab from './components/HomeTab';
 import TasksTab from './components/TasksTab';
 import LeaderboardTab from './components/LeaderboardTab';
 import ProfileTab from './components/ProfileTab';
-import AdminTab from './components/AdminTab';
 import ToastContainer from './components/ToastContainer';
 
 function AppInner() {
@@ -20,8 +19,6 @@ function AppInner() {
 
   const [tasks, setTasks] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
-  const [pendingTaskClaims, setPendingTaskClaims] = useState([]);
-  const [globalStats, setGlobalStats] = useState({ totalBDT: 0, totalUsers: 0, completedTasks: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -38,10 +35,6 @@ function AppInner() {
         setTasks(allTasks);
         const allWithdrawals = await dbService.getWithdrawals();
         setWithdrawals(allWithdrawals);
-        const allPendingClaims = await dbService.getPendingTaskClaims();
-        setPendingTaskClaims(allPendingClaims);
-        const stats = await dbService.getGlobalStats();
-        setGlobalStats(stats);
       }
     } catch (err) {
       console.error('Error loading application data:', err);
@@ -194,11 +187,7 @@ function AppInner() {
                     }`}
                   />
 
-                  <button onClick={handleGuestLogin} disabled={loading} className={`w-full py-3 px-6 rounded-[14px] text-[11px] font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg ${
-                    theme === 'dark'
-                      ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500'
-                      : 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500'
-                  }`}>
+                  <button onClick={handleGuestLogin} disabled={loading} className={`w-full py-3 px-6 rounded-[14px] text-[11px] font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500`}>
                     {loading ? (
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
@@ -222,7 +211,6 @@ function AppInner() {
                 {activeTab === 'tasks' && <TasksTab user={user} tasks={tasks} refreshAppState={refreshAppState} />}
                 {activeTab === 'leaderboard' && <LeaderboardTab user={user} refreshAppState={refreshAppState} />}
                 {activeTab === 'profile' && <ProfileTab user={user} refreshAppState={refreshAppState} onLogout={handleLogout} withdrawals={withdrawals} />}
-                {activeTab === 'admin' && <AdminTab user={user} tasks={tasks} withdrawals={withdrawals} pendingTaskClaims={pendingTaskClaims} globalStats={globalStats} refreshAppState={refreshAppState} />}
               </>
             )}
           </main>
@@ -234,9 +222,8 @@ function AppInner() {
                 { key: 'tasks', icon: <CheckSquare className="w-[17px] h-[17px]" />, label: t('tasks') },
                 { key: 'leaderboard', icon: <Trophy className="w-[17px] h-[17px]" />, label: t('events') },
                 { key: 'profile', icon: <User className="w-[17px] h-[17px]" />, label: t('wallet') },
-                { key: 'admin', icon: <Settings className="w-[17px] h-[17px]" />, label: t('admin'), isAdmin: true },
               ].map(nav => (
-                <button key={nav.key} onClick={() => setActiveTab(nav.key)} className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-[12px] transition-all duration-300 ${activeTab === nav.key ? nav.isAdmin ? 'text-pink-400 font-extrabold scale-105 bg-pink-500/10' : `font-extrabold scale-105 ${theme === 'dark' ? 'text-violet-400 bg-violet-500/10' : 'text-violet-600 bg-violet-100'}` : theme === 'dark' ? 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]' : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'}`}>
+                <button key={nav.key} onClick={() => setActiveTab(nav.key)} className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-[12px] transition-all duration-300 ${activeTab === nav.key ? `font-extrabold scale-105 ${theme === 'dark' ? 'text-violet-400 bg-violet-500/10' : 'text-violet-600 bg-violet-100'}` : theme === 'dark' ? 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]' : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'}`}>
                   {nav.icon}
                   <span className="text-[7px] font-bold uppercase tracking-wider">{nav.label}</span>
                 </button>
