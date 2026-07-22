@@ -2,23 +2,33 @@ import { signInWithPopup, signInWithCredential, GoogleAuthProvider, signOut } fr
 import { Capacitor } from '@capacitor/core';
 import { auth, googleProvider } from './firebase';
 
+let googleAuthInitialized = false;
+
+async function initGoogleAuth() {
+  if (googleAuthInitialized) return;
+  const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
+  await GoogleAuth.initialize({
+    clientId: undefined,
+    scopes: ['profile', 'email'],
+    grantOfflineAccess: false,
+  });
+  googleAuthInitialized = true;
+}
+
 export const authService = {
   signInWithGoogle: async () => {
     if (Capacitor.isNativePlatform()) {
-      // Android/iOS: use native Google Sign-In plugin
+      await initGoogleAuth();
       const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
-      await GoogleAuth.initialize({
-        clientId: undefined, // uses capacitor.config.json serverClientId
-        scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
-      });
       const result = await GoogleAuth.signIn();
+      if (!result || !result.authentication || !result.authentication.idToken) {
+        throw new Error('Google Sign-In failed: no idToken received');
+      }
       const credential = GoogleAuthProvider.credential(result.authentication.idToken);
       const userCredential = await signInWithCredential(auth, credential);
       return userCredential.user;
     }
 
-    // Web: use Firebase popup
     const result = await signInWithPopup(auth, googleProvider);
     return result.user;
   },
